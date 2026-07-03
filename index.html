@@ -3,78 +3,212 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Summerlin Design | Residential &amp; Commercial Interior Design | Orange County</title>
-<meta name="description" content="Summerlin Design provides residential and commercial interior design across Orange County, from Ladera Ranch to Irvine and Newport Beach. 10 years of design experience, 250+ completed projects.">
+<title>Summerlin Design | Interior Design, Orange County</title>
+<meta name="description" content="Summerlin Design — full-service residential and commercial interior design across Orange County. 250+ completed projects. Based in Ladera Ranch, CA.">
+
+<!-- Google Analytics 4 — replace G-XXXXXXXXXX with your Measurement ID from analytics.google.com -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-XXXXXXXXXX');</script>
+
+<!-- Local Business Schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "Summerlin Design",
+  "description": "Full-service residential and commercial interior design across Orange County, CA. 250+ completed projects, 10+ years experience.",
+  "url": "https://summerlin-design.vercel.app",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Ladera Ranch",
+    "addressRegion": "CA",
+    "addressCountry": "US"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 33.5629,
+    "longitude": -117.6338
+  },
+  "areaServed": {
+    "@type": "GeoCircle",
+    "geoMidpoint": { "@type": "GeoCoordinates", "latitude": 33.5629, "longitude": -117.6338 },
+    "geoRadius": "48280"
+  },
+  "knowsAbout": ["Interior Design","Residential Interior Design","Commercial Interior Design","Office Design","Medical Office Design","Hospitality Design"],
+  "openingHours": "Mo-Fr 09:00-17:00",
+  "priceRange": "$$$$"
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
 <nav class="nav">
-  <div class="wrap">
-    <a href="index.html" class="nav-logo">Summerlin Design</a>
-    <ul class="nav-links">
-      <li><a href="residential.html">Residential</a></li>
-      <li><a href="commercial.html">Commercial</a></li>
-      <li><a href="portfolio.html">Portfolio</a></li>
-      <li><a href="about.html">About</a></li>
-    </ul>
-    <a href="contact.html" class="btn btn-primary nav-cta">Contact</a>
-  </div>
+  <a href="index.html" class="nav-logo">Summerlin Design</a>
+  <ul class="nav-links">
+    <li><a href="residential.html">Residential</a></li>
+    <li><a href="commercial.html">Commercial</a></li>
+    <li><a href="portfolio.html">Portfolio</a></li>
+    <li><a href="about.html">About</a></li>
+  </ul>
+  <a href="contact.html" class="nav-cta">Get in touch</a>
 </nav>
 
-<div class="swatch-strip"><span class="s1"></span><span class="s2"></span><span class="s3"></span><span class="s4"></span><span class="s5"></span></div>
-
-<header class="hero">
-  <div class="wrap">
-    <span class="eyebrow">Ladera Ranch, CA &middot; Serving Orange County</span>
-    <h1>Interior design for the spaces you live in, and the ones you run a business from.</h1>
-    <div class="hero-sub">
-      <p class="lede">10 years of residential design experience. 250+ completed projects. Now bringing the same considered, hands-on approach to offices, medical practices, and hospitality spaces across Orange County.</p>
+<!-- ── HERO ──────────────────────────────────────────────────── -->
+<section class="hero">
+  <div class="hero-bg">
+    <img src="images/hero/hero.webp" alt="Summerlin Design interior">
+  </div>
+  <div class="hero-content">
+    <div class="hero-text">
+      <span class="eyebrow-white">Residential &amp; Commercial Interior Design &middot; Orange County</span>
+      <h1 class="hero-h1">250+ completed projects. One designer.</h1>
       <div class="hero-actions">
-        <a href="contact.html" class="btn btn-primary">Start a project</a>
-        <a href="portfolio.html" class="btn btn-ghost">View the work</a>
+        <a href="contact.html" class="btn-white">Start a project</a>
+        <a href="portfolio.html" class="link-ghost-white">View the work &rarr;</a>
       </div>
     </div>
-    <div class="trust-bar">
-      <span>250+ Completed Projects</span>
-      <span>10 Years Design Experience</span>
-      <span>Based in Ladera Ranch</span>
-      <span>Licensed &amp; Insured</span>
-    </div>
-  </div>
-</header>
-
-<section class="wrap">
-  <div class="paths">
-    <div class="path-card">
-      <span class="eyebrow">Residential</span>
-      <h2>Homes, designed to be lived in.</h2>
-      <p>Full-service residential design across Orange County &mdash; from a single room refresh to a full-home build-out. 250+ projects and counting.</p>
-      <a href="residential.html" class="btn btn-ghost">Explore residential &rarr;</a>
-    </div>
-    <div class="path-card">
-      <span class="eyebrow">Commercial</span>
-      <h2>Your office is a first impression.</h2>
-      <p>Offices, medical &amp; dental practices, hospitality, and developments &mdash; managed start to finish by one experienced designer.</p>
-      <a href="commercial.html" class="btn btn-ghost">Explore commercial &rarr;</a>
+    <div class="hero-trust">
+      <span class="trust-num">10+</span>
+      <span class="trust-label">Years Experience</span>
+      <span class="trust-label" style="margin-top:0.75rem;">Ladera Ranch, CA</span>
+      <span class="trust-label">Licensed &amp; Insured</span>
     </div>
   </div>
 </section>
 
-<section class="section section-alt">
-  <div class="wrap" style="text-align:center;">
-    <span class="eyebrow">A note from the studio</span>
-    <h2 style="max-width:34ch;margin:0 auto;">One designer. Direct access. No handoffs, no design-by-committee.</h2>
-    <p class="lede" style="margin:var(--space-3) auto 0;">Whether it's a living room or a leasing office, you work directly with the person doing the work &mdash; from first consultation to final walkthrough.</p>
-  </div>
-</section>
-
-<footer class="site-footer">
+<!-- ── METHODOLOGY ───────────────────────────────────────────── -->
+<section class="section-black" style="padding:var(--sec-v) 0;">
   <div class="wrap">
-    <div class="footer-grid">
+    <span class="eyebrow-white" data-reveal>How we work</span>
+    <h2 style="color:var(--white);max-width:24ch;" data-reveal data-reveal-delay="1">Three principles. Every project.</h2>
+    <div class="method-grid">
+
+      <div class="method-item" data-reveal data-reveal-delay="1">
+        <div class="method-icon">
+          <svg width="36" height="36" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="18" cy="11" r="5.5"/>
+            <path d="M5 34c0-7.2 5.8-13 13-13s13 5.8 13 13"/>
+          </svg>
+        </div>
+        <div class="method-word">Direct.</div>
+        <p class="method-desc">You work with the designer — not an account manager or project coordinator. Every call, every decision, every answer comes from the person doing the work.</p>
+      </div>
+
+      <div class="method-item" data-reveal data-reveal-delay="2">
+        <div class="method-icon">
+          <svg width="36" height="36" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="7" y="9" width="22" height="24" rx="1"/>
+            <path d="M12 9V6h12v3"/>
+            <path d="M13 18h10M13 24h7"/>
+          </svg>
+        </div>
+        <div class="method-word">Managed.</div>
+        <p class="method-desc">Every vendor, every order, every delivery is handled in-house. Furniture, fixtures, and materials sourced, coordinated, and installed without you chasing a single timeline.</p>
+      </div>
+
+      <div class="method-item" data-reveal data-reveal-delay="3">
+        <div class="method-icon">
+          <svg width="36" height="36" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 18c4-8 8.5-12 15-12s11 4 15 12c-4 8-8.5 12-15 12S7 26 3 18z"/>
+            <circle cx="18" cy="18" r="4.5"/>
+          </svg>
+        </div>
+        <div class="method-word">Considered.</div>
+        <p class="method-desc">Ten years of residential precision applied to every space. Selections are made for how a room functions on a Tuesday morning, not just how it photographs.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── SPLIT PATHS ────────────────────────────────────────────── -->
+<section class="section">
+  <div class="wrap">
+    <span class="eyebrow" data-reveal>Where we work</span>
+    <h2 style="max-width:22ch;" data-reveal data-reveal-delay="1">Homes designed to be lived in. Offices built to perform.</h2>
+    <div class="path-grid">
+      <div class="path-card" data-reveal data-reveal-delay="1">
+        <div class="path-card-img">
+          <!-- ✏️ Replace with: <img src="images/residential/residential-path.jpg" alt="Residential interior"> -->
+          Residential photo · 16:9 · 800×450px min
+        </div>
+        <div class="path-card-body">
+          <h3>Residential</h3>
+          <p>250+ completed projects across Orange County homes — from a single room to a full new-build, managed start to finish.</p>
+          <a href="residential.html" class="link-ghost-black">Explore residential &rarr;</a>
+        </div>
+      </div>
+      <div class="path-card" data-reveal data-reveal-delay="2">
+        <div class="path-card-img" style="background:var(--ph-meddark);color:rgba(255,255,255,0.35);">
+          <!-- ✏️ Replace with: <img src="images/commercial/commercial-path.jpg" alt="Commercial interior"> -->
+          Commercial photo · 16:9 · 800×450px min
+        </div>
+        <div class="path-card-body">
+          <h3>Commercial</h3>
+          <p>Offices, medical and dental practices, hospitality spaces, and developments across Orange County — one designer, full accountability.</p>
+          <a href="commercial.html" class="link-ghost-black">Explore commercial &rarr;</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TESTIMONIALS ───────────────────────────────────────────── -->
+<div class="rule"></div>
+<section class="section section-ivory">
+  <div class="wrap">
+    <span class="eyebrow" data-reveal>From clients</span>
+    <h2 style="max-width:22ch;" data-reveal data-reveal-delay="1">What working with one designer actually feels like.</h2>
+    <div class="testimonial-grid">
+
+      <div class="testimonial-item" data-reveal data-reveal-delay="1">
+        <!-- ✏️ Replace with a real client quote when available -->
+        <p class="testimonial-quote">&ldquo;[Client testimonial placeholder. Drop in a real quote here — 2 to 4 sentences works best. The more specific, the more credible.]&rdquo;</p>
+        <div class="testimonial-rule"></div>
+        <span class="testimonial-name">[Client Name]</span>
+        <span class="testimonial-detail">[e.g. Homeowner, Ladera Ranch / Office renovation, Irvine]</span>
+      </div>
+
+      <div class="testimonial-item" data-reveal data-reveal-delay="2">
+        <p class="testimonial-quote">&ldquo;[Client testimonial placeholder. A quote about the process working smoothly, or a specific result that was meaningful to this client.]&rdquo;</p>
+        <div class="testimonial-rule"></div>
+        <span class="testimonial-name">[Client Name]</span>
+        <span class="testimonial-detail">[e.g. Practice owner, Mission Viejo / Full-home design]</span>
+      </div>
+
+      <div class="testimonial-item" data-reveal data-reveal-delay="3">
+        <p class="testimonial-quote">&ldquo;[Client testimonial placeholder. A quote that speaks to Leslie's hands-on involvement and the quality of the final result.]&rdquo;</p>
+        <div class="testimonial-rule"></div>
+        <span class="testimonial-name">[Client Name]</span>
+        <span class="testimonial-detail">[e.g. Developer, Newport Beach / Multi-unit project]</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA STRIP ──────────────────────────────────────────────── -->
+<section class="section section-dark">
+  <div class="wrap" style="text-align:center;">
+    <span class="eyebrow-white" data-reveal>Start here</span>
+    <h2 style="max-width:22ch;margin:0 auto 1.5rem;" data-reveal data-reveal-delay="1">Ready to talk through your project?</h2>
+    <p style="color:rgba(255,255,255,0.55);max-width:44ch;margin:0 auto 2.5rem;font-size:1rem;line-height:1.7;" data-reveal data-reveal-delay="2">Residential or commercial — the first conversation is free and genuinely useful, even if we&rsquo;re not the right fit.</p>
+    <a href="contact.html" class="btn-white" data-reveal data-reveal-delay="3">Get in touch</a>
+  </div>
+</section>
+
+<!-- ── FOOTER ─────────────────────────────────────────────────── -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-inner">
       <div>
-        <a href="index.html" class="nav-logo">Summerlin Design</a>
-        <p style="margin-top:0.5rem;color:rgba(234,227,211,0.6);">Ladera Ranch, CA &middot; Serving Orange County within a 30-mile radius</p>
+        <a href="index.html" class="footer-logo">Summerlin Design</a>
+        <p>Ladera Ranch, CA &middot; Serving Orange County within 30 miles</p>
       </div>
       <ul class="footer-links">
         <li><a href="residential.html">Residential</a></li>
@@ -91,5 +225,37 @@
   </div>
 </footer>
 
+<script>
+(function () {
+  // Respect prefers-reduced-motion — skip all animation setup if requested
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  var html = document.documentElement;
+
+  // 1. Hero entrance — add class that triggers CSS animation
+  var hero = document.querySelector('.hero');
+  if (hero) hero.classList.add('hero-animate');
+
+  // 2. Scroll reveal — gate hidden states behind this class so
+  //    content is always accessible without JS
+  html.classList.add('js-reveal');
+
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-revealed');
+        io.unobserve(entry.target); // fire once only
+      }
+    });
+  }, {
+    threshold: 0.1,
+    rootMargin: '0px 0px -52px 0px' // trigger just before fully in view
+  });
+
+  document.querySelectorAll('[data-reveal]').forEach(function (el) {
+    io.observe(el);
+  });
+})();
+</script>
 </body>
 </html>

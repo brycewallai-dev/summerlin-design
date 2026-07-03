@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Summerlin Design — Hero Preview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+
+/* ── Reset ───────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', -apple-system, sans-serif;
+  background: #ffffff;
+  color: #0a0a0a;
+  -webkit-font-smoothing: antialiased;
+  font-size: 17px;
+  line-height: 1.6;
+}
+a { color: inherit; text-decoration: none; }
+img { display: block; max-width: 100%; }
+
+/* ── Tokens ──────────────────────────────────────────────── */
+:root {
+  --black:      #0a0a0a;
+  --charcoal:   #1c1c1c;
+  --gray-mid:   #6b6b6b;
+  --gray-light: #e2e2e2;
+  --white:      #ffffff;
+  --ivory:      #fafaf8;
+  --ph-dark:    #2c2c2c;  /* dark placeholder simulates a room photo */
+  --ph-mid:     #c8c8c8;  /* mid-gray placeholder for bright interior shot */
+
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body:    'Inter', -apple-system, sans-serif;
+
+  --max-width: 1200px;
+  --nav-h: 80px;
+}
+
+/* ── Nav ─────────────────────────────────────────────────── */
+/* Floated over the hero — white text on dark photo */
+.nav {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  z-index: 20;
+  height: var(--nav-h);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 3rem;
+}
+.nav-logo {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  color: var(--white);
+}
+.nav-links {
+  display: flex;
+  gap: 2.5rem;
+  list-style: none;
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.85);
+}
+.nav-links a:hover { color: var(--white); }
+.nav-cta {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--white);
+  border: 1px solid rgba(255,255,255,0.6);
+  padding: 0.6rem 1.4rem;
+  transition: background 0.2s, border-color 0.2s;
+}
+.nav-cta:hover {
+  background: var(--white);
+  color: var(--black);
+  border-color: var(--white);
+}
+
+/* ── Hero ────────────────────────────────────────────────── */
+.hero {
+  position: relative;
+  height: 100vh;
+  min-height: 640px;
+  overflow: hidden;
+}
+
+/* Full-bleed image placeholder — replace with <img> or background-image */
+.hero-img {
+  position: absolute;
+  inset: 0;
+  background: var(--ph-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/* Subtle gradient overlay — bottom half gets darker so white text reads */
+.hero-img::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0.18) 0%,
+    rgba(0,0,0,0.08) 40%,
+    rgba(0,0,0,0.55) 100%
+  );
+}
+
+/* Placeholder label — remove when real photo is in */
+.hero-img-label {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  color: rgba(255,255,255,0.3);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  line-height: 2;
+}
+.hero-img-label strong {
+  display: block;
+  font-size: 0.65rem;
+  opacity: 0.6;
+}
+
+/* Text content — pinned to bottom-left of the viewport */
+.hero-content {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  z-index: 10;
+  padding: 0 3rem 4rem;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+.hero-text { max-width: 680px; }
+.hero-eyebrow {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.65);
+  margin-bottom: 1rem;
+}
+.hero-h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2.6rem, 5.5vw, 5rem);
+  font-weight: 300;
+  line-height: 1.06;
+  letter-spacing: -0.02em;
+  color: var(--white);
+  max-width: 14ch;
+}
+.hero-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2.2rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.btn-hero-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.85rem 2rem;
+  background: var(--white);
+  color: var(--black);
+  border: 1px solid var(--white);
+  transition: background 0.2s, color 0.2s;
+}
+.btn-hero-primary:hover {
+  background: transparent;
+  color: var(--white);
+}
+.btn-hero-ghost {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: rgba(255,255,255,0.75);
+  gap: 0.4rem;
+  border-bottom: 1px solid rgba(255,255,255,0.35);
+  padding-bottom: 1px;
+  transition: color 0.2s, border-color 0.2s;
+}
+.btn-hero-ghost:hover {
+  color: var(--white);
+  border-color: var(--white);
+}
+
+/* Trust bar — right side of hero bottom */
+.hero-trust {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  text-align: right;
+}
+.hero-trust span {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: rgba(255,255,255,0.5);
+  text-transform: uppercase;
+}
+.hero-trust .trust-primary {
+  font-family: var(--font-display);
+  font-size: 3.8rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: rgba(255,255,255,0.95);
+  text-transform: none;
+  display: block;
+}
+
+/* ── Section below (so you can see the white-background context) ── */
+.intro {
+  padding: 6rem 3rem;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+  align-items: center;
+}
+.intro-text h2 {
+  font-family: var(--font-display);
+  font-size: clamp(1.9rem, 3vw, 2.8rem);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--black);
+  margin-bottom: 1.5rem;
+}
+.intro-text p {
+  font-size: 1.05rem;
+  color: var(--gray-mid);
+  max-width: 44ch;
+  line-height: 1.7;
+  margin-bottom: 1rem;
+}
+.intro-text p:last-of-type { margin-bottom: 2rem; }
+.btn-black {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.85rem 2rem;
+  background: var(--black);
+  color: var(--white);
+  border: 1px solid var(--black);
+  transition: background 0.2s, color 0.2s;
+}
+.btn-black:hover { background: transparent; color: var(--black); }
+
+.intro-img {
+  background: var(--ph-mid);
+  aspect-ratio: 4/3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #999;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 2;
+}
+
+/* Thin rule between hero and below */
+.rule {
+  height: 1px;
+  background: var(--gray-light);
+}
+
+@media (max-width: 860px) {
+  .nav-links, .nav-cta { display: none; }
+  .nav { padding: 0 1.5rem; }
+  .hero-content { padding: 0 1.5rem 3rem; }
+  .hero-trust { display: none; }
+  .intro { grid-template-columns: 1fr; padding: 4rem 1.5rem; gap: 2.5rem; }
+}
+
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════
+     HERO
+     ══════════════════════════════════════ -->
+<section class="hero">
+
+  <!-- Nav floated over the photo -->
+  <nav class="nav">
+    <a href="#" class="nav-logo">Summerlin Design</a>
+    <ul class="nav-links">
+      <li><a href="#">Residential</a></li>
+      <li><a href="#">Commercial</a></li>
+      <li><a href="#">Portfolio</a></li>
+      <li><a href="#">About</a></li>
+    </ul>
+    <a href="#" class="nav-cta">Get in touch</a>
+  </nav>
+
+  <!-- Full-bleed image placeholder -->
+  <div class="hero-img">
+    <div class="hero-img-label">
+      Hero photo goes here — full bleed, 100% viewport height<br>
+      <strong>Replace with: a wide, high-quality interior photo · dark/moody tones read best<br>Minimum: 1920×1080px · landscape orientation</strong>
+    </div>
+  </div>
+
+  <!-- Text overlaid on photo, bottom-left -->
+  <div class="hero-content">
+    <div class="hero-text">
+      <span class="hero-eyebrow">Residential &amp; Commercial Interior Design &middot; Orange County</span>
+      <h1 class="hero-h1">250+ completed projects. One designer.</h1>
+      <div class="hero-actions">
+        <a href="#" class="btn-hero-primary">Start a project</a>
+        <a href="#" class="btn-hero-ghost">View the work &rarr;</a>
+      </div>
+    </div>
+
+    <!-- Trust signal, bottom-right -->
+    <div class="hero-trust">
+      <span class="trust-primary">10+ Years</span>
+      <span style="margin-top:0.75rem;">Ladera Ranch, CA</span>
+      <span>Licensed &amp; Insured</span>
+    </div>
+  </div>
+
+</section>
+
+<!-- ══════════════════════════════════════
+     SECTION BELOW — shows white-bg context
+     ══════════════════════════════════════ -->
+<div class="rule"></div>
+<section class="intro">
+  <div class="intro-text">
+    <h2>One designer. Every project, start to finish.</h2>
+    <p>Whether it&rsquo;s a home or a corporate office, you work directly with the person doing the work &mdash; from the first conversation through final installation. No account managers, no handoffs, no guessing who made the decision.</p>
+    <p>10 years and 250+ completed residential projects across Orange County. Now bringing the same considered approach to offices, medical practices, and hospitality spaces.</p>
+    <a href="#" class="btn-black">See the work</a>
+  </div>
+  <div class="intro-img">
+    Photo placeholder<br>
+    <span style="opacity:0.6;font-weight:400;font-size:0.6rem;">Interior detail · square or 4:3 · 800×600px min</span>
+  </div>
+</section>
+
+</body>
+</html>

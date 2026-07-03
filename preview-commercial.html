@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Commercial Interior Design | Orange County | Summerlin Design — Preview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+
+/* ── Reset & Base ────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', -apple-system, sans-serif;
+  background: #ffffff;
+  color: #0a0a0a;
+  -webkit-font-smoothing: antialiased;
+  font-size: 17px;
+  line-height: 1.6;
+}
+a { color: inherit; text-decoration: none; }
+img { display: block; max-width: 100%; }
+
+/* ── Tokens ──────────────────────────────────────────────── */
+:root {
+  --black:        #0a0a0a;
+  --charcoal:     #1c1c1c;
+  --gray-mid:     #6b6b6b;
+  --gray-light:   #e2e2e2;
+  --gray-rule:    #d8d8d8;
+  --white:        #ffffff;
+  --ivory:        #fafaf8;
+  --ph-dark:      #252525;
+  --ph-med-dark:  #3a3a3a;
+  --ph-mid:       #c4c4c4;
+  --ph-light:     #dedede;
+
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body:    'Inter', -apple-system, sans-serif;
+
+  --max-w:        1200px;
+  --nav-h:        80px;
+  --section-v:    7rem;
+}
+
+/* ── Nav ─────────────────────────────────────────────────── */
+.nav {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  z-index: 20;
+  height: var(--nav-h);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 3rem;
+}
+.nav-logo {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  color: var(--white);
+}
+.nav-links {
+  display: flex;
+  gap: 2.5rem;
+  list-style: none;
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.8);
+}
+.nav-links .active { color: var(--white); }
+.nav-links a:hover { color: var(--white); }
+.nav-cta {
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--white);
+  border: 1px solid rgba(255,255,255,0.55);
+  padding: 0.6rem 1.4rem;
+  transition: background 0.2s, border-color 0.2s;
+}
+.nav-cta:hover { background: var(--white); color: var(--black); border-color: var(--white); }
+
+/* ── Hero ────────────────────────────────────────────────── */
+.hero {
+  position: relative;
+  height: 100vh;
+  min-height: 640px;
+  overflow: hidden;
+}
+.hero-img {
+  position: absolute;
+  inset: 0;
+  background: var(--ph-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.hero-img::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0.15) 0%,
+    rgba(0,0,0,0.05) 35%,
+    rgba(0,0,0,0.62) 100%
+  );
+}
+.hero-ph-label {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  color: rgba(255,255,255,0.25);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  line-height: 2.2;
+}
+.hero-content {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  z-index: 10;
+  padding: 0 3rem 4rem;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+.hero-text { max-width: 620px; }
+.eyebrow-white {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 1.1rem;
+}
+.hero-h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 4.5vw, 4.2rem);
+  font-weight: 300;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  color: var(--white);
+  max-width: 16ch;
+}
+.hero-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2.2rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.btn-white {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.76rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.85rem 2rem;
+  background: var(--white);
+  color: var(--black);
+  border: 1px solid var(--white);
+  transition: background 0.2s, color 0.2s;
+}
+.btn-white:hover { background: transparent; color: var(--white); }
+.btn-ghost-white {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.76rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: rgba(255,255,255,0.7);
+  gap: 0.4rem;
+  border-bottom: 1px solid rgba(255,255,255,0.3);
+  padding-bottom: 1px;
+  transition: color 0.2s, border-color 0.2s;
+}
+.btn-ghost-white:hover { color: var(--white); border-color: rgba(255,255,255,0.8); }
+.hero-trust {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  text-align: right;
+}
+.trust-primary {
+  font-family: var(--font-display);
+  font-size: 3.8rem;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  color: rgba(255,255,255,0.95);
+  display: block;
+  line-height: 1;
+}
+.trust-secondary {
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+}
+
+/* ── Sections ─────────────────────────────────────────────── */
+.section { padding: var(--section-v) 0; }
+.section-dark { background: var(--charcoal); color: var(--white); }
+.section-ivory { background: var(--ivory); }
+.wrap { max-width: var(--max-w); margin: 0 auto; padding: 0 3rem; }
+
+.eyebrow {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gray-mid);
+  margin-bottom: 1.2rem;
+}
+.section-dark .eyebrow { color: rgba(255,255,255,0.45); }
+
+h2 {
+  font-family: var(--font-display);
+  font-size: clamp(1.9rem, 3.2vw, 3rem);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--black);
+}
+.section-dark h2 { color: var(--white); }
+
+h3 {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--black);
+}
+.section-dark h3 { color: var(--white); }
+
+p.body { color: var(--gray-mid); max-width: 56ch; line-height: 1.75; }
+p.body-dark { color: rgba(255,255,255,0.65); max-width: 56ch; line-height: 1.75; }
+p.lede { font-size: 1.15rem; color: var(--black); max-width: 48ch; line-height: 1.65; }
+
+/* ── Problem intro ───────────────────────────────────────── */
+.intro-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6rem;
+  align-items: center;
+}
+.intro-grid p { margin-top: 1.4rem; }
+.intro-grid p:last-of-type { margin-bottom: 2rem; }
+.intro-img-ph {
+  aspect-ratio: 4/3;
+  background: var(--ph-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #999;
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 2.2;
+}
+
+/* ── Project-type cards ─────────────────────────────────── */
+/* Image is dominant. Text is a small editorial caption below. No boxes. */
+.project-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--gray-rule);
+}
+.project-card { background: var(--white); }
+.project-card-img {
+  width: 100%;
+  aspect-ratio: 4/3;
+  background: var(--ph-mid);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #999;
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 2.2;
+  position: relative;
+  overflow: hidden;
+  transition: opacity 0.3s;
+}
+.project-card-img:hover { opacity: 0.9; }
+.project-card-body {
+  padding: 1.4rem 1.6rem 2rem;
+  border-top: 1px solid var(--gray-rule);
+}
+.project-card-cat {
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gray-mid);
+  margin-bottom: 0.5rem;
+  display: block;
+}
+.project-card h3 { font-size: 1.1rem; margin-bottom: 0.6rem; }
+.project-card p {
+  font-size: 0.88rem;
+  color: var(--gray-mid);
+  line-height: 1.65;
+  max-width: 42ch;
+}
+
+/* ── Process (dark) ─────────────────────────────────────── */
+.process-list { margin-top: 3.5rem; }
+.process-item {
+  display: grid;
+  grid-template-columns: 72px 1fr;
+  gap: 2.5rem;
+  padding: 2rem 0;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+.process-item:last-child { border-bottom: 1px solid rgba(255,255,255,0.1); }
+.process-num {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 300;
+  color: rgba(255,255,255,0.25);
+  line-height: 1;
+  padding-top: 0.3rem;
+}
+.process-item h3 { margin-bottom: 0.5rem; }
+.process-item p { color: rgba(255,255,255,0.6); font-size: 0.95rem; line-height: 1.7; max-width: 52ch; }
+
+/* ── Differentiators ─────────────────────────────────────── */
+.diff-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--gray-rule);
+  margin-top: 3.5rem;
+}
+.diff-item {
+  background: var(--white);
+  padding: 2.5rem;
+}
+.diff-rule {
+  width: 32px;
+  height: 2px;
+  background: var(--black);
+  margin-bottom: 1.4rem;
+}
+.diff-item h3 { font-size: 1.1rem; margin-bottom: 0.75rem; }
+.diff-item p { font-size: 0.9rem; color: var(--gray-mid); line-height: 1.7; max-width: 34ch; }
+
+/* ── CTA / Form ──────────────────────────────────────────── */
+.cta-wrap {
+  display: grid;
+  grid-template-columns: 1fr 480px;
+  gap: 6rem;
+  align-items: start;
+}
+.cta-heading { font-size: clamp(2rem, 3.5vw, 3.2rem); max-width: 14ch; margin-bottom: 1.2rem; }
+.cta-note { font-size: 0.9rem; color: rgba(255,255,255,0.55); line-height: 1.7; max-width: 40ch; margin-top: 1rem; }
+
+.form { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.form-full { grid-column: 1 / -1; }
+.form label {
+  display: block;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.45);
+  margin-bottom: 0.4rem;
+}
+.form input,
+.form select,
+.form textarea {
+  width: 100%;
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  padding: 0.8rem 1rem;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.18);
+  color: var(--white);
+  border-radius: 0;
+  outline: none;
+  transition: border-color 0.2s;
+  appearance: none;
+}
+.form input::placeholder,
+.form textarea::placeholder { color: rgba(255,255,255,0.25); }
+.form input:focus,
+.form select:focus,
+.form textarea:focus { border-color: rgba(255,255,255,0.55); }
+.form select option { background: var(--charcoal); color: var(--white); }
+.btn-submit {
+  grid-column: 1 / -1;
+  font-family: var(--font-body);
+  font-size: 0.76rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 1rem 2rem;
+  background: var(--white);
+  color: var(--black);
+  border: 1px solid var(--white);
+  cursor: pointer;
+  width: 100%;
+  transition: background 0.2s, color 0.2s;
+}
+.btn-submit:hover { background: transparent; color: var(--white); }
+.form-note {
+  grid-column: 1 / -1;
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.35);
+  text-align: center;
+  line-height: 1.6;
+}
+
+/* ── Thin rule divider ───────────────────────────────────── */
+.rule { height: 1px; background: var(--gray-rule); }
+
+/* ── Footer ──────────────────────────────────────────────── */
+.footer {
+  background: var(--black);
+  color: rgba(255,255,255,0.45);
+  padding: 4rem 0 2rem;
+  font-size: 0.82rem;
+}
+.footer-grid {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 2rem;
+  padding-bottom: 3rem;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  margin-bottom: 2rem;
+}
+.footer-logo {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  color: rgba(255,255,255,0.8);
+  display: block;
+  margin-bottom: 0.5rem;
+}
+.footer-links {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+.footer-links a:hover { color: rgba(255,255,255,0.8); }
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  font-size: 0.74rem;
+  color: rgba(255,255,255,0.25);
+}
+
+/* ── Responsive ──────────────────────────────────────────── */
+@media (max-width: 960px) {
+  .intro-grid { grid-template-columns: 1fr; gap: 3rem; }
+  .diff-grid { grid-template-columns: 1fr; }
+  .cta-wrap { grid-template-columns: 1fr; gap: 3rem; }
+}
+@media (max-width: 760px) {
+  :root { --section-v: 5rem; }
+  .nav { padding: 0 1.5rem; }
+  .nav-links, .nav-cta { display: none; }
+  .hero-content { padding: 0 1.5rem 3rem; }
+  .hero-trust { display: none; }
+  .wrap { padding: 0 1.5rem; }
+  .project-grid { grid-template-columns: 1fr; }
+  .process-item { grid-template-columns: 48px 1fr; gap: 1.5rem; }
+  .process-num { font-size: 1.4rem; }
+  .form { grid-template-columns: 1fr; }
+  .btn-submit { grid-column: 1; }
+  .form-note { grid-column: 1; }
+}
+
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════
+     HERO
+     ══════════════════════════════════════ -->
+<section class="hero">
+  <nav class="nav">
+    <a href="index.html" class="nav-logo">Summerlin Design</a>
+    <ul class="nav-links">
+      <li><a href="residential.html">Residential</a></li>
+      <li><a href="commercial.html" class="active">Commercial</a></li>
+      <li><a href="portfolio.html">Portfolio</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+    <a href="#consult" class="nav-cta">Schedule consultation</a>
+  </nav>
+
+  <div class="hero-img">
+    <div class="hero-ph-label">
+      Hero photo goes here — full bleed, full viewport height<br>
+      <span style="opacity:0.7;font-weight:400;">Suggested: wide-angle shot of a polished corporate or hospitality interior<br>Minimum 1920×1080px · landscape · dark/moody tones read best</span>
+    </div>
+  </div>
+
+  <div class="hero-content">
+    <div class="hero-text">
+      <span class="eyebrow-white">Commercial Interior Design &middot; Orange County</span>
+      <h1 class="hero-h1">Your office is a first impression. Right now, it&rsquo;s not making the right one.</h1>
+      <div class="hero-actions">
+        <a href="#consult" class="btn-white">Schedule a consultation</a>
+        <a href="portfolio.html" class="btn-ghost-white">See the work &rarr;</a>
+      </div>
+    </div>
+    <div class="hero-trust">
+      <span class="trust-primary">10+</span>
+      <span class="trust-secondary">Years Experience</span>
+      <span class="trust-secondary" style="margin-top:0.75rem;">250+ Completed Projects</span>
+      <span class="trust-secondary">Ladera Ranch, CA</span>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     PROBLEM / INTRO
+     ══════════════════════════════════════ -->
+<section class="section">
+  <div class="wrap">
+    <div class="intro-grid">
+      <div>
+        <span class="eyebrow">The problem</span>
+        <h2>Most offices weren&rsquo;t designed. They just happened.</h2>
+        <p class="body" style="margin-top:1.4rem;">Furniture ordered piecemeal. A conference room that became a storage room. The same waiting area chairs from move-in day. None of it is anyone&rsquo;s fault &mdash; running a business doesn&rsquo;t leave time to think about space planning.</p>
+        <p class="body" style="margin-top:1rem;">But your space is doing more work than you think. It&rsquo;s the first thing a new client sees, the first impression a candidate forms before you say a word, and the daily environment your team spends 40+ hours a week inside.</p>
+        <p class="body" style="margin-top:1rem; color:var(--black); font-weight:500;">We handle the entire process &mdash; design, sourcing, and installation &mdash; so your space matches the caliber of the business you&rsquo;re running.</p>
+      </div>
+      <div class="intro-img-ph">
+        Photo placeholder<br>
+        <span style="font-weight:400;font-size:0.6rem;opacity:0.7;">Office interior detail · 4:3 ratio<br>800×600px minimum</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<!-- ══════════════════════════════════════
+     WHO WE WORK WITH — image-dominant cards
+     ══════════════════════════════════════ -->
+<section class="section section-ivory">
+  <div class="wrap">
+    <span class="eyebrow">Who we work with</span>
+    <h2 style="max-width:26ch;">Commercial design for the businesses that make Orange County run.</h2>
+
+    <div class="project-grid" style="margin-top:3rem;">
+
+      <div class="project-card">
+        <div class="project-card-img">
+          Photo placeholder<br>
+          <span style="font-weight:400;font-size:0.6rem;opacity:0.7;">Corporate office interior<br>4:3 · 800×600px min</span>
+        </div>
+        <div class="project-card-body">
+          <span class="project-card-cat">Offices</span>
+          <h3>Corporate Office Design</h3>
+          <p>Irvine &amp; Newport Beach professional offices, law firms, financial practices, and tech companies. Space planning, private offices, conference rooms, and reception areas that reflect how your business wants to be seen.</p>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-card-img" style="background:var(--ph-light);">
+          Photo placeholder<br>
+          <span style="font-weight:400;font-size:0.6rem;opacity:0.7;">Medical or dental practice interior<br>4:3 · 800×600px min</span>
+        </div>
+        <div class="project-card-body">
+          <span class="project-card-cat">Medical / Dental</span>
+          <h3>Medical &amp; Dental Practices</h3>
+          <p>South Orange County practices that need calming, patient-centered spaces without sacrificing operational flow. Waiting rooms, treatment areas, and staff spaces designed around patient experience and practical workflow.</p>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-card-img" style="background:var(--ph-med-dark);">
+          Photo placeholder<br>
+          <span style="font-weight:400;font-size:0.6rem;opacity:0.7;color:rgba(255,255,255,0.5);">Hotel or restaurant interior<br>4:3 · 800×600px min</span>
+        </div>
+        <div class="project-card-body">
+          <span class="project-card-cat">Hospitality</span>
+          <h3>Hospitality Spaces</h3>
+          <p>Boutique hotels, restaurants, and hospitality venues in Dana Point and San Clemente. Design that creates atmosphere and supports the guest experience from entry to exit &mdash; built to hold up under daily commercial use.</p>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-card-img">
+          Photo placeholder<br>
+          <span style="font-weight:400;font-size:0.6rem;opacity:0.7;">Model unit or common area<br>4:3 · 800×600px min</span>
+        </div>
+        <div class="project-card-body">
+          <span class="project-card-cat">Developers</span>
+          <h3>Developers &amp; Property Management</h3>
+          <p>Model units, common areas, and multi-property refreshes for developers and property managers who need consistent, repeatable design at the pace a leasing or sales timeline requires.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     PROCESS — dark section
+     ══════════════════════════════════════ -->
+<section class="section section-dark">
+  <div class="wrap">
+    <span class="eyebrow">Our process</span>
+    <h2 style="max-width:28ch;">A clear process. No surprises. No scope creep.</h2>
+    <p class="body-dark" style="margin-top:1.2rem;">Corporate clients need to know what they&rsquo;re getting and what it costs before work begins. Here&rsquo;s exactly how a project moves from first conversation to final walkthrough.</p>
+
+    <div class="process-list">
+      <div class="process-item">
+        <span class="process-num">01</span>
+        <div>
+          <h3>Complimentary Space Consultation</h3>
+          <p>A 30-minute conversation, in person or virtual, to understand your space, your goals, and your timeline. You&rsquo;ll leave with a clear sense of scope and next steps &mdash; no pressure, no obligation.</p>
+        </div>
+      </div>
+      <div class="process-item">
+        <span class="process-num">02</span>
+        <div>
+          <h3>Proposal &amp; Fee Structure</h3>
+          <p>A written proposal with defined scope, a clear fee structure, and a payment schedule before any design work begins. You&rsquo;ll know your total investment upfront.</p>
+        </div>
+      </div>
+      <div class="process-item">
+        <span class="process-num">03</span>
+        <div>
+          <h3>Concept &amp; Space Planning</h3>
+          <p>Space plans, material palettes, and design concepts built around how your business actually functions day to day &mdash; not just how a room looks in a photo.</p>
+        </div>
+      </div>
+      <div class="process-item">
+        <span class="process-num">04</span>
+        <div>
+          <h3>Selections &amp; Procurement</h3>
+          <p>We source and manage every furniture, fixture, and material order &mdash; vendor coordination, lead times, and logistics included, so your team doesn&rsquo;t have to chase a single delivery.</p>
+        </div>
+      </div>
+      <div class="process-item">
+        <span class="process-num">05</span>
+        <div>
+          <h3>Installation &amp; Final Walkthrough</h3>
+          <p>On-site oversight through installation, with a final walkthrough to confirm every detail matches the approved plan before we call it done.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     DIFFERENTIATORS
+     ══════════════════════════════════════ -->
+<section class="section">
+  <div class="wrap">
+    <span class="eyebrow">Why work with us</span>
+    <h2>One designer. Full accountability. No handoffs.</h2>
+    <div class="diff-grid">
+      <div class="diff-item">
+        <div class="diff-rule"></div>
+        <h3>Direct access to your designer.</h3>
+        <p>You&rsquo;re not routed through account managers or a design-by-committee process. You work directly with the person doing the work, from first consultation to final walkthrough.</p>
+      </div>
+      <div class="diff-item">
+        <div class="diff-rule"></div>
+        <h3>Procurement handled, not outsourced.</h3>
+        <p>Furniture and fixture sourcing is managed in-house as part of the process &mdash; one point of contact, one timeline, one person accountable for what shows up and when.</p>
+      </div>
+      <div class="diff-item">
+        <div class="diff-rule"></div>
+        <h3>Residential eye. Commercial process.</h3>
+        <p>10 years and 250+ residential projects builds judgment most commercial designers don&rsquo;t have &mdash; backed by a formal proposal, contract, and payment process built for business clients.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     CTA + FORM
+     ══════════════════════════════════════ -->
+<section class="section section-dark" id="consult">
+  <div class="wrap">
+    <div class="cta-wrap">
+      <div>
+        <span class="eyebrow">Let&rsquo;s look at your space</span>
+        <h2 class="cta-heading">Schedule your complimentary space consultation.</h2>
+        <p class="cta-note">The consultation is 30 minutes and genuinely useful even if we&rsquo;re not the right fit. You&rsquo;ll leave with a clearer sense of what your space needs and what it would take to fix it.</p>
+      </div>
+      <form class="form" action="https://formspree.io/f/REPLACE_WITH_ID" method="POST">
+        <div>
+          <label for="name">Name</label>
+          <input id="name" name="name" type="text" placeholder="Your name" required>
+        </div>
+        <div>
+          <label for="company">Company / Practice</label>
+          <input id="company" name="company" type="text" placeholder="Company name">
+        </div>
+        <div>
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" placeholder="you@company.com" required>
+        </div>
+        <div>
+          <label for="phone">Phone</label>
+          <input id="phone" name="phone" type="tel" placeholder="(949) 000-0000">
+        </div>
+        <div class="form-full">
+          <label for="type">Project Type</label>
+          <select id="type" name="type">
+            <option value="">Select&hellip;</option>
+            <option>Corporate Office</option>
+            <option>Medical or Dental Practice</option>
+            <option>Hospitality</option>
+            <option>Developer or Property Management</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-full">
+          <label for="details">Tell us about your space</label>
+          <textarea id="details" name="details" rows="4" placeholder="Location, square footage, timeline, or anything else that feels relevant."></textarea>
+        </div>
+        <button type="submit" class="btn-submit">Send message</button>
+        <p class="form-note">We respond within one business day. No pressure, no obligation.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     FOOTER
+     ══════════════════════════════════════ -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <a href="index.html" class="footer-logo">Summerlin Design</a>
+        <p>Ladera Ranch, CA &middot; Serving Orange County within a 30-mile radius</p>
+      </div>
+      <ul class="footer-links">
+        <li><a href="residential.html">Residential</a></li>
+        <li><a href="commercial.html">Commercial</a></li>
+        <li><a href="portfolio.html">Portfolio</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 Summerlin Design. All rights reserved.</span>
+      <span>Licensed &amp; Insured</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

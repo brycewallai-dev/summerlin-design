@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Contract Builder — Summerlin Design</title>
+<!--
+  SUMMERLIN DESIGN — INTERNAL CONTRACT BUILDER  (Stage 1 of 2)
+  Not linked from the public site. Password protected.
+
+  STAGE 1 — Designer fills in all business terms → generates a unique
+  client signing link.  STAGE 2 — /sign.html (client-facing, no password).
+
+  DEFAULT PASSWORD: SummerlinInternal26
+  To change: open browser console and run:
+    hashPassword('your-new-password').then(h => console.log(h))
+  Then replace PASSWORD_HASH below with the output.
+
+  Formspree: replace REPLACE_WITH_INTERNAL_FORM_ID with a new form ID
+  created at formspree.io (keep separate from the public contact form).
+-->
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', -apple-system, sans-serif;
+  background: #f4f4f2;
+  color: #0a0a0a;
+  font-size: 15px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; }
+label { display: block; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em;
+  text-transform: uppercase; color: #6b6b6b; margin-bottom: 0.35rem; }
+input[type=text], input[type=number], input[type=tel], input[type=email],
+input[type=password], select, textarea {
+  width: 100%; font-family: inherit; font-size: 0.95rem; padding: 0.7rem 0.9rem;
+  border: 1px solid #d8d8d8; background: #fff; color: #0a0a0a;
+  border-radius: 2px; outline: none; transition: border-color 0.18s;
+  appearance: none; -webkit-appearance: none;
+}
+input:focus, select:focus, textarea:focus { border-color: #0a0a0a; }
+textarea { resize: vertical; min-height: 90px; }
+.field { margin-bottom: 1.2rem; }
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+@media (max-width: 600px) { .field-row { grid-template-columns: 1fr; } }
+button {
+  font-family: inherit; font-size: 0.78rem; font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer;
+  padding: 0.85rem 2rem; border-radius: 2px; border: none;
+  transition: background 0.18s, color 0.18s;
+}
+.btn-primary { background: #0a0a0a; color: #fff; width: 100%; margin-top: 0.5rem; }
+.btn-primary:hover { background: #2a2a2a; }
+.btn-primary:disabled { background: #aaa; cursor: not-allowed; }
+.btn-ghost { background: transparent; color: #0a0a0a; border: 1px solid #d8d8d8;
+  padding: 0.65rem 1.4rem; font-size: 0.72rem; }
+.btn-ghost:hover { border-color: #0a0a0a; }
+.btn-sm { padding: 0.65rem 1.4rem; font-size: 0.72rem; width: auto; }
+
+/* ── Payment schedule dropdowns ─────────────────────────── */
+.pay-pct-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-bottom: 0.6rem; }
+@media (max-width: 600px) { .pay-pct-row { grid-template-columns: 1fr; } }
+.pay-total-bar {
+  font-size: 0.82rem; font-weight: 600;
+  padding: 0.5rem 0.9rem; border-radius: 2px; margin-bottom: 0.9rem;
+  transition: background 0.2s, color 0.2s;
+}
+.pay-total-bar.ok  { background: #eaf4ea; color: #276227; border: 1px solid #b7dbb7; }
+.pay-total-bar.err { background: #fdf0ee; color: #c0392b; border: 1px solid #e0b0aa; }
+.pay-preview {
+  font-size: 0.86rem; line-height: 1.7; color: #444;
+  border: 1px solid #e0e0e0; background: #fafafa;
+  padding: 0.85rem 1rem; border-radius: 2px;
+  white-space: pre-wrap; min-height: 80px;
+}
+
+/* ── Login ─────────────────────────────────────────────── */
+#login {
+  min-height: 100vh; display: flex; align-items: center; justify-content: center;
+  background: #0a0a0a;
+}
+.login-card {
+  background: #fff; padding: 3rem 2.5rem; width: 100%; max-width: 400px;
+  border-radius: 2px;
+}
+.login-logo { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.18em;
+  text-transform: uppercase; color: #6b6b6b; margin-bottom: 1.5rem; }
+.login-card h2 { font-size: 1.5rem; font-weight: 500; margin-bottom: 0.3rem; }
+.login-card .sub { font-size: 0.85rem; color: #6b6b6b; margin-bottom: 1.8rem; }
+.login-error { display: none; font-size: 0.82rem; color: #c0392b;
+  background: #fdf0ee; border: 1px solid #e0b0aa; padding: 0.6rem 0.8rem;
+  border-radius: 2px; margin-bottom: 1rem; }
+.login-error.visible { display: block; }
+.login-card .field { margin-bottom: 1rem; }
+.login-card button { margin-top: 0.5rem; }
+
+/* ── App ───────────────────────────────────────────────── */
+#app { display: none; max-width: 860px; margin: 0 auto; padding: 2rem 1.5rem 5rem; }
+.tool-header {
+  display: flex; align-items: baseline; gap: 1rem;
+  padding-bottom: 1.2rem; border-bottom: 1px solid #d8d8d8;
+  margin-bottom: 2rem; flex-wrap: wrap;
+}
+.tool-logo { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.18em;
+  text-transform: uppercase; color: #6b6b6b; }
+.tool-header h1 { font-size: 1.3rem; font-weight: 500; flex: 1; }
+.tool-badge {
+  font-size: 0.64rem; font-weight: 600; letter-spacing: 0.12em;
+  text-transform: uppercase; background: #fef3cd; color: #856404;
+  padding: 0.3rem 0.7rem; border-radius: 2px; border: 1px solid #fde68a;
+}
+.step-label { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.14em;
+  text-transform: uppercase; color: #6b6b6b; margin-bottom: 1.5rem; }
+
+/* ── Card ──────────────────────────────────────────────── */
+.card {
+  background: #fff; border: 1px solid #d8d8d8; border-radius: 2px;
+  padding: 1.8rem 2rem; margin-bottom: 1.5rem;
+}
+.card-title {
+  font-size: 0.72rem; font-weight: 600; letter-spacing: 0.14em;
+  text-transform: uppercase; color: #0a0a0a; padding-bottom: 1rem;
+  border-bottom: 1px solid #e8e8e8; margin-bottom: 1.4rem;
+}
+
+/* ── Fee toggle ─────────────────────────────────────────── */
+.fee-toggle { display: flex; gap: 0; margin-bottom: 1.2rem; }
+.fee-toggle label {
+  flex: 1; text-align: center; padding: 0.65rem 1rem;
+  border: 1px solid #d8d8d8; cursor: pointer; font-size: 0.82rem;
+  font-weight: 500; letter-spacing: 0.04em; text-transform: none; color: #6b6b6b;
+  transition: all 0.15s; margin: 0;
+}
+.fee-toggle label:first-child { border-radius: 2px 0 0 2px; }
+.fee-toggle label:last-child { border-radius: 0 2px 2px 0; margin-left: -1px; }
+.fee-toggle input[type=radio] { display: none; }
+.fee-toggle input[type=radio]:checked + label {
+  background: #0a0a0a; color: #fff; border-color: #0a0a0a; z-index: 1;
+}
+#hourly-fields, #fixed-fields { display: none; }
+#hourly-fields.active, #fixed-fields.active { display: block; }
+
+/* ── Step 2 — Link generation ─────────────────────────── */
+#step2 { display: none; }
+.summary-table { width: 100%; font-size: 0.88rem; border-collapse: collapse; }
+.summary-table tr { border-bottom: 1px solid #f0f0ee; }
+.summary-table tr:last-child { border-bottom: none; }
+.summary-table td { padding: 0.55rem 0; vertical-align: top; }
+.summary-table td:first-child {
+  font-size: 0.7rem; font-weight: 600; letter-spacing: 0.1em;
+  text-transform: uppercase; color: #6b6b6b; width: 130px; padding-right: 1rem;
+}
+.link-display-wrap { margin: 1rem 0 0.75rem; }
+.link-display {
+  font-family: 'SF Mono', 'Menlo', 'Courier New', monospace;
+  font-size: 0.76rem; background: #f8f8f6; resize: none;
+  min-height: 68px; line-height: 1.55; color: #333; cursor: text;
+}
+.link-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: center; }
+.copy-confirm {
+  display: none; font-size: 0.78rem; color: #166534; font-weight: 600;
+  letter-spacing: 0.04em;
+}
+.copy-confirm.visible { display: inline; }
+.next-steps { margin: 0; padding-left: 1.5rem; font-size: 0.88rem; line-height: 2; }
+.next-steps li { color: #1c1c1c; }
+.card-note {
+  font-size: 0.78rem; color: #6b6b6b; margin-top: 1.2rem;
+  padding-top: 1rem; border-top: 1px solid #e8e8e8; line-height: 1.65;
+}
+.warn-banner {
+  background: #fff8e1; border: 1px solid #f9c946; border-radius: 2px;
+  padding: 0.9rem 1.2rem; font-size: 0.82rem; color: #7a5c00;
+  margin-bottom: 1.5rem; line-height: 1.6;
+}
+.warn-banner strong { display: block; margin-bottom: 0.2rem; font-size: 0.72rem;
+  letter-spacing: 0.1em; text-transform: uppercase; }
+.step2-actions { display: flex; gap: 1rem; margin-top: 0.5rem; flex-wrap: wrap; }
+.back-link { margin-bottom: 1rem; }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════
+     LOGIN
+     ══════════════════════════════════════════════════════ -->
+<div id="login">
+  <div class="login-card">
+    <div class="login-logo">Summerlin Design</div>
+    <h2>Contract Builder</h2>
+    <p class="sub">Internal use only &mdash; not a client-facing page.</p>
+    <div class="login-error" id="login-error">Incorrect password. Try again.</div>
+    <div class="field">
+      <label for="pw-input">Password</label>
+      <input type="password" id="pw-input" autocomplete="current-password">
+    </div>
+    <button class="btn-primary" onclick="doLogin()">Enter</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     APP
+     ══════════════════════════════════════════════════════ -->
+<div id="app">
+  <header class="tool-header">
+    <span class="tool-logo">Summerlin Design</span>
+    <h1>Contract Builder</h1>
+    <span class="tool-badge">Internal Only</span>
+  </header>
+
+  <!-- ── STEP 1: FORM ───────────────────────────────── -->
+  <div id="step1">
+    <div class="step-label">Step 1 of 2 &mdash; Contract Details</div>
+
+    <form id="contract-form" onsubmit="handleFormSubmit(event)" novalidate>
+
+      <!-- Client Information -->
+      <div class="card">
+        <div class="card-title">Client Information</div>
+        <div class="field">
+          <label for="f-client-name">Client Name *</label>
+          <input type="text" id="f-client-name" required placeholder="First Last">
+        </div>
+        <div class="field">
+          <label for="f-company">Company / Practice Name</label>
+          <input type="text" id="f-company" placeholder="Optional">
+        </div>
+        <div class="field">
+          <label for="f-address">Client Address *</label>
+          <textarea id="f-address" rows="2" required
+            placeholder="Street, City, State, ZIP"></textarea>
+        </div>
+      </div>
+
+      <!-- Project Details -->
+      <div class="card">
+        <div class="card-title">Project Details</div>
+        <div class="field-row">
+          <div class="field">
+            <label for="f-project-type">Project Type *</label>
+            <select id="f-project-type" required>
+              <option value="">Select&hellip;</option>
+              <option value="Office">Office</option>
+              <option value="Medical / Dental Practice">Medical / Dental Practice</option>
+              <option value="Hospitality">Hospitality</option>
+              <option value="Developer / Property Management">Developer / Property Management</option>
+              <option value="Residential">Residential</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="f-timeline">Estimated Timeline *</label>
+            <input type="text" id="f-timeline" required
+              placeholder="e.g. 8&ndash;12 weeks, Q3 2026">
+          </div>
+        </div>
+        <div class="field">
+          <label for="f-scope">Project Scope &amp; Description *</label>
+          <textarea id="f-scope" rows="5" required
+            placeholder="Describe the full scope of design services included in this agreement."></textarea>
+        </div>
+      </div>
+
+      <!-- Fee Structure -->
+      <div class="card">
+        <div class="card-title">Fee Structure</div>
+        <div class="fee-toggle">
+          <input type="radio" name="fee-type" id="fee-hourly" value="hourly" checked>
+          <label for="fee-hourly">Hourly Rate</label>
+          <input type="radio" name="fee-type" id="fee-fixed" value="fixed">
+          <label for="fee-fixed">Fixed Cost</label>
+        </div>
+        <div id="hourly-fields" class="active">
+          <div class="field">
+            <label for="f-rate">Hourly Rate ($/hr)</label>
+            <input type="number" id="f-rate" value="225" min="1" step="5">
+          </div>
+          <div class="field" style="margin-top:1rem;">
+            <label for="f-retainer">Initial Retainer Amount ($) — optional</label>
+            <input type="number" id="f-retainer" min="0" step="100" placeholder="e.g. 2500"
+                   oninput="updatePaymentSummary()">
+            <p style="font-size:0.78rem;color:#6b6b6b;margin-top:0.35rem;">
+              If entered, the retainer dollar amount appears in the payment clause. Leave blank to omit the figure.
+            </p>
+          </div>
+        </div>
+        <div id="fixed-fields">
+          <div class="field">
+            <label for="f-fixed-total">Total Fixed Project Fee ($)</label>
+            <input type="number" id="f-fixed-total" min="1" placeholder="e.g. 12000"
+                   oninput="updatePaymentSummary()">
+          </div>
+        </div>
+        <div class="field" style="margin-top:1rem;">
+          <label for="f-markup">Procurement Markup (FF&amp;E) *</label>
+          <select id="f-markup">
+            <option value="10">10%</option>
+            <option value="15">15%</option>
+            <option value="20">20%</option>
+            <option value="25">25%</option>
+            <option value="30" selected>30% (default)</option>
+            <option value="35">35%</option>
+            <option value="40">40%</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Payment Schedule -->
+      <div class="card">
+        <div class="card-title">Payment Schedule</div>
+        <div class="pay-pct-row">
+          <div class="field">
+            <label for="f-dep">Retainer / Deposit *</label>
+            <select id="f-dep" onchange="updatePaymentSummary()">
+              <option value="10">10%</option>
+              <option value="20">20%</option>
+              <option value="30">30%</option>
+              <option value="40">40%</option>
+              <option value="50" selected>50%</option>
+              <option value="60">60%</option>
+              <option value="70">70%</option>
+              <option value="80">80%</option>
+              <option value="90">90%</option>
+              <option value="100">100%</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="f-concept">Concept Approval *</label>
+            <select id="f-concept" onchange="updatePaymentSummary()">
+              <option value="10">10%</option>
+              <option value="20">20%</option>
+              <option value="30" selected>30%</option>
+              <option value="40">40%</option>
+              <option value="50">50%</option>
+              <option value="60">60%</option>
+              <option value="70">70%</option>
+              <option value="80">80%</option>
+              <option value="90">90%</option>
+              <option value="100">100%</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="f-final">Final Payment *</label>
+            <select id="f-final" onchange="updatePaymentSummary()">
+              <option value="10">10%</option>
+              <option value="20" selected>20%</option>
+              <option value="30">30%</option>
+              <option value="40">40%</option>
+              <option value="50">50%</option>
+              <option value="60">60%</option>
+              <option value="70">70%</option>
+              <option value="80">80%</option>
+              <option value="90">90%</option>
+              <option value="100">100%</option>
+            </select>
+          </div>
+        </div>
+        <div id="pay-total-bar" class="pay-total-bar ok">50% + 30% + 20% = 100% ✓</div>
+        <div class="field" style="margin-top:0;">
+          <label>Generated Payment Clause (preview)</label>
+          <div id="pay-preview" class="pay-preview"></div>
+        </div>
+      </div>
+
+      <button type="submit" class="btn-primary">
+        Generate Client Signing Link &rarr;
+      </button>
+    </form>
+  </div><!-- /step1 -->
+
+  <!-- ── STEP 2: LINK GENERATION ────────────────────── -->
+  <div id="step2">
+    <p class="back-link">
+      <button type="button" class="btn-ghost" onclick="backToForm()">&larr; Back to Edit</button>
+    </p>
+    <div class="step-label">Step 2 of 2 &mdash; Signing Link Ready</div>
+
+    <div id="ph-warning" class="warn-banner" style="display:none;">
+      <strong>Placeholder Sections Detected</strong>
+      This contract still contains placeholder legal language. The client will see a
+      draft notice when they open the link. Finalize all sections before this
+      agreement is executed.
+    </div>
+
+    <!-- Contract summary -->
+    <div class="card">
+      <div class="card-title">Contract Summary</div>
+      <div id="summary-display"></div>
+    </div>
+
+    <!-- Signing link -->
+    <div class="card">
+      <div class="card-title">Client Signing Link</div>
+      <p style="font-size:0.88rem;color:#555;margin-bottom:0;">
+        Email this link to the client. They will see the complete, read-only contract
+        and can sign electronically. The link is valid indefinitely.
+      </p>
+      <div class="link-display-wrap">
+        <textarea class="link-display" id="link-display" readonly rows="4"
+          aria-label="Client signing URL"></textarea>
+      </div>
+      <div class="link-actions">
+        <button type="button" class="btn-primary btn-sm" id="copy-btn" onclick="copyLink()">
+          Copy Link
+        </button>
+        <button type="button" class="btn-ghost" onclick="previewDraftPDF()">
+          Download Draft PDF
+        </button>
+        <span class="copy-confirm" id="copy-confirm">&check; Copied to clipboard</span>
+      </div>
+      <p class="card-note">
+        The link encodes all contract terms. If you revise any details, click
+        &ldquo;Back to Edit&rdquo; and generate a new link &mdash; only send
+        the updated link to the client. If the link is very long, you can shorten it
+        with bit.ly before emailing.
+      </p>
+    </div>
+
+    <!-- Next steps -->
+    <div class="card">
+      <div class="card-title">Next Steps</div>
+      <ol class="next-steps">
+        <li>Copy the link above and email it to <strong id="ns-client"></strong>.</li>
+        <li>The client opens the link, reads the full contract (read-only &mdash; no
+            edits possible), and signs electronically.</li>
+        <li>When signed, they download the executed PDF. They will be prompted to
+            email you a copy to complete execution.</li>
+        <li>You will also receive a Formspree email notification with signer name,
+            timestamp, and IP address.</li>
+      </ol>
+    </div>
+
+    <div class="step2-actions">
+      <button type="button" class="btn-ghost" onclick="backToForm()">&larr; Back to Edit</button>
+      <button type="button" class="btn-ghost" onclick="startNew()">Start New Contract</button>
+    </div>
+  </div><!-- /step2 -->
+
+</div><!-- /app -->
+
+<!-- jsPDF -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<script>
+'use strict';
+
+// ─────────────────────────────────────────────────────────────
+// CONFIG
+// Default password: SummerlinInternal26
+// To change: run hashPassword('newpassword').then(h=>console.log(h))
+// in the browser console, then paste the result here.
+// ─────────────────────────────────────────────────────────────
+const PASSWORD_HASH    = 'e667785a639056b6cf21c41db3b2ed57a68ca16fb1f1764d90e4d794329e7c14';
+const SIGNING_BASE_URL = 'https://summerlin-design.vercel.app/sign.html';
+
+// ─────────────────────────────────────────────────────────────
+// AUTH
+// ─────────────────────────────────────────────────────────────
+async function hashPassword(pw) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(pw));
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+}
+
+async function doLogin() {
+  const pw   = document.getElementById('pw-input').value;
+  const hash = await hashPassword(pw);
+  if (hash === PASSWORD_HASH) {
+    sessionStorage.setItem('sd_auth', '1');
+    document.getElementById('login').style.display = 'none';
+    document.getElementById('app').style.display   = 'block';
+    updatePaymentSummary();
+  } else {
+    document.getElementById('login-error').classList.add('visible');
+    document.getElementById('pw-input').value = '';
+    document.getElementById('pw-input').focus();
+  }
+}
+
+// ─────────────────────────────────────────────────────────────
+// STATE
+// ─────────────────────────────────────────────────────────────
+let formData = {};
+
+// ─────────────────────────────────────────────────────────────
+// FEE TOGGLE
+// ─────────────────────────────────────────────────────────────
+function initFeeToggle() {
+  document.querySelectorAll('input[name="fee-type"]').forEach(radio => {
+    radio.addEventListener('change', () => {
+      const isHourly = radio.value === 'hourly';
+      document.getElementById('hourly-fields').classList.toggle('active',  isHourly);
+      document.getElementById('fixed-fields').classList.toggle('active', !isHourly);
+      updatePaymentSummary();
+    });
+  });
+}
+
+// ─────────────────────────────────────────────────────────────
+// PAYMENT SCHEDULE DROPDOWNS
+// ─────────────────────────────────────────────────────────────
+function buildPaymentText(dep, concept, fin, opts) {
+  opts = opts || {};
+  const feeType        = opts.feeType || 'hourly';
+  const fixedTotal     = parseFloat(opts.fixedTotal) || 0;
+  const hourlyRetainer = parseFloat(opts.hourlyRetainer) || 0;
+
+  const fmt = n => '$' + Math.round(n).toLocaleString('en-US');
+
+  let firstParagraph;
+
+  if (feeType === 'fixed' && fixedTotal > 0) {
+    const depAmt     = fmt(fixedTotal * dep / 100);
+    const conceptAmt = fmt(fixedTotal * concept / 100);
+    const finAmt     = fmt(fixedTotal * fin / 100);
+    firstParagraph =
+      `Total project fee is due in three installments: ` +
+      `${dep}% deposit (${depAmt}) due upon signing of this agreement, prior to commencement of design work; ` +
+      `${concept}% concept approval payment (${conceptAmt}) due upon client's written approval of design concept and space plan; ` +
+      `${fin}% final payment (${finAmt}) due upon completion of installation and final walkthrough, prior to project close-out.`;
+  } else if (feeType === 'fixed') {
+    // Fixed selected but total not entered yet — omit dollar amounts
+    firstParagraph =
+      `Total project fee is due in three installments: ` +
+      `${dep}% deposit due upon signing of this agreement, prior to commencement of design work; ` +
+      `${concept}% concept approval payment due upon client's written approval of design concept and space plan; ` +
+      `${fin}% final payment due upon completion of installation and final walkthrough, prior to project close-out.`;
+  } else {
+    // Hourly — retainer as dollar amount if specified; concept/final as % of fees invoiced
+    const depositClause = hourlyRetainer > 0
+      ? `${fmt(hourlyRetainer)} initial retainer due upon signing of this agreement, prior to commencement of design work`
+      : `Initial retainer due upon signing of this agreement, prior to commencement of design work`;
+    firstParagraph =
+      `Design fees are invoiced on an hourly basis at the agreed rate. Payment schedule: ` +
+      `${depositClause}; ` +
+      `concept approval payment equal to ${concept}% of total design fees invoiced as of the approval date, due upon client's written approval of design concept and space plan; ` +
+      `final settlement of all remaining outstanding design fees due upon completion of installation and final walkthrough, prior to project close-out.`;
+  }
+
+  return (
+    firstParagraph +
+    '\n\n' +
+    `All procured furniture, fixtures, and equipment (FF&E) are invoiced separately from design fees. Each FF&E invoice must be paid in full prior to Designer placing the order with the vendor. Designer shall not be responsible for delays, price changes, or item discontinuation resulting from late payment of FF&E invoices.` +
+    '\n\n' +
+    `All invoices are due within ten (10) days of the invoice date. Any balance not received within thirty (30) days of the invoice date shall accrue a late fee of 1.5% per month (18% per annum) on the outstanding balance. Designer reserves the right to suspend services until the account is current.`
+  );
+}
+
+function updatePaymentSummary() {
+  const dep     = parseInt(document.getElementById('f-dep').value, 10);
+  const concept = parseInt(document.getElementById('f-concept').value, 10);
+  const fin     = parseInt(document.getElementById('f-final').value, 10);
+  const total   = dep + concept + fin;
+  const bar     = document.getElementById('pay-total-bar');
+
+  if (total === 100) {
+    bar.textContent = `${dep}% + ${concept}% + ${fin}% = 100% ✓`;
+    bar.className   = 'pay-total-bar ok';
+  } else {
+    bar.textContent = `${dep}% + ${concept}% + ${fin}% = ${total}% — must total 100%`;
+    bar.className   = 'pay-total-bar err';
+  }
+
+  const feeType        = (document.querySelector('input[name="fee-type"]:checked') || {}).value || 'hourly';
+  const fixedTotal     = parseFloat(document.getElementById('f-fixed-total').value) || 0;
+  const hourlyRetainer = parseFloat(document.getElementById('f-retainer').value) || 0;
+
+  document.getElementById('pay-preview').textContent =
+    buildPaymentText(dep, concept, fin, { feeType, fixedTotal, hourlyRetainer });
+}
+
+// ─────────────────────────────────────────────────────────────
+// FORM SUBMIT → GENERATE LINK
+// ─────────────────────────────────────────────────────────────
+function handleFormSubmit(e) {
+  e.preventDefault();
+
+  const feeType = document.querySelector('input[name="fee-type"]:checked').value;
+
+  const required = ['f-client-name','f-address','f-project-type','f-scope','f-timeline'];
+  for (const id of required) {
+    const el = document.getElementById(id);
+    if (!el.value.trim()) { el.focus(); alert('Please fill in all required fields.'); return; }
+  }
+
+  const dep     = parseInt(document.getElementById('f-dep').value, 10);
+  const concept = parseInt(document.getElementById('f-concept').value, 10);
+  const fin     = parseInt(document.getElementById('f-final').value, 10);
+  if (dep + concept + fin !== 100) {
+    document.getElementById('pay-total-bar').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    alert(`Payment percentages must total 100%. Current total: ${dep + concept + fin}%.`);
+    return;
+  }
+
+  if (feeType === 'hourly') {
+    const rate = parseFloat(document.getElementById('f-rate').value);
+    if (!rate) { alert('Enter an hourly rate.'); return; }
+  } else {
+    if (!document.getElementById('f-fixed-total').value) {
+      alert('Enter the fixed project fee.'); return;
+    }
+  }
+
+  formData = {
+    clientName:    document.getElementById('f-client-name').value.trim(),
+    company:       document.getElementById('f-company').value.trim(),
+    address:       document.getElementById('f-address').value.trim(),
+    projectType:   document.getElementById('f-project-type').value,
+    timeline:      document.getElementById('f-timeline').value.trim(),
+    scope:         document.getElementById('f-scope').value.trim(),
+    feeType,
+    rate:          document.getElementById('f-rate').value,
+    fixedTotal:    document.getElementById('f-fixed-total').value,
+    markup:        document.getElementById('f-markup').value,
+    payment:       buildPaymentText(dep, concept, fin, {
+                     feeType,
+                     fixedTotal:     parseFloat(document.getElementById('f-fixed-total').value) || 0,
+                     hourlyRetainer: parseFloat(document.getElementById('f-retainer').value) || 0,
+                   }),
+    generatedDate: new Date().toLocaleDateString('en-US',
+                     {year:'numeric', month:'long', day:'numeric'}),
+    isoDate:       new Date().toISOString(),
+  };
+
+  generateSigningLink();
+  document.getElementById('step1').style.display = 'none';
+  document.getElementById('step2').style.display = 'block';
+  window.scrollTo(0,0);
+}
+
+// ─────────────────────────────────────────────────────────────
+// URL ENCODING
+// ─────────────────────────────────────────────────────────────
+function encodeContractData(data) {
+  const bytes = new TextEncoder().encode(JSON.stringify(data));
+  let binary = '';
+  bytes.forEach(b => binary += String.fromCharCode(b));
+  // URL-safe base64 (+ → -, / → _, strip padding =)
+  return btoa(binary).replace(/\+/g,'-').replace(/\//g,'_').replace(/=/g,'');
+}
+
+// ─────────────────────────────────────────────────────────────
+// LINK GENERATION + SUMMARY
+// ─────────────────────────────────────────────────────────────
+function generateSigningLink() {
+  const encoded = encodeContractData(formData);
+  const url     = `${SIGNING_BASE_URL}#${encoded}`;
+
+  document.getElementById('link-display').value = url;
+  document.getElementById('ns-client').textContent = formData.clientName;
+
+  // Warn if any sections are placeholder
+  const hasPH = buildContractSections(formData).some(s => s.ph);
+  document.getElementById('ph-warning').style.display = hasPH ? 'block' : 'none';
+
+  renderSummary();
+}
+
+function renderSummary() {
+  const d = formData;
+  const fee = d.feeType === 'hourly'
+    ? `$${d.rate}/hr`
+    : `Fixed: $${parseFloat(d.fixedTotal).toLocaleString('en-US',{minimumFractionDigits:2})}`;
+
+  document.getElementById('summary-display').innerHTML = `
+    <table class="summary-table">
+      <tr><td>Client</td>
+          <td><strong>${esc(d.clientName)}</strong>${d.company ? ' &mdash; ' + esc(d.company) : ''}</td></tr>
+      <tr><td>Address</td>
+          <td>${esc(d.address).replace(/\n/g,'<br>')}</td></tr>
+      <tr><td>Project Type</td>
+          <td>${esc(d.projectType)}</td></tr>
+      <tr><td>Design Fee</td>
+          <td>${fee}</td></tr>
+      <tr><td>FF&amp;E Markup</td>
+          <td>${esc(d.markup)}%</td></tr>
+      <tr><td>Timeline</td>
+          <td>${esc(d.timeline)}</td></tr>
+      <tr><td>Date Prepared</td>
+          <td>${esc(d.generatedDate)}</td></tr>
+    </table>
+  `;
+}
+
+function esc(str) {
+  return String(str)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ─────────────────────────────────────────────────────────────
+// COPY LINK
+// ─────────────────────────────────────────────────────────────
+async function copyLink() {
+  const url  = document.getElementById('link-display').value;
+  const btn  = document.getElementById('copy-btn');
+  const conf = document.getElementById('copy-confirm');
+  try {
+    await navigator.clipboard.writeText(url);
+  } catch(e) {
+    const ta = document.getElementById('link-display');
+    ta.select();
+    document.execCommand('copy');
+  }
+  conf.classList.add('visible');
+  btn.textContent = 'Copied!';
+  setTimeout(() => { conf.classList.remove('visible'); btn.textContent = 'Copy Link'; }, 2800);
+}
+
+// ─────────────────────────────────────────────────────────────
+// NAVIGATION
+// ─────────────────────────────────────────────────────────────
+function backToForm() {
+  document.getElementById('step2').style.display = 'none';
+  document.getElementById('step1').style.display = 'block';
+  window.scrollTo(0,0);
+}
+
+function startNew() {
+  if (confirm('Clear all fields and start a new contract?')) location.reload();
+}
+
+// ─────────────────────────────────────────────────────────────
+// CONTRACT SECTIONS  (keep in sync with sign.html)
+// ─────────────────────────────────────────────────────────────
+function buildFeeText(d) {
+  if (d.feeType === 'hourly') {
+    return `$${parseFloat(d.rate).toFixed(2)} per hour.`;
+  }
+  return `Fixed fee of $${parseFloat(d.fixedTotal).toLocaleString('en-US',{minimumFractionDigits:2})} for the complete scope described above.`;
+}
+
+function buildContractSections(d) {
+  const fee     = buildFeeText(d);
+  const company = d.company ? `${d.clientName}, ${d.company}` : d.clientName;
+  return [
+    {
+      title: 'INTERIOR DESIGN SERVICES AGREEMENT',
+      body:  `This Interior Design Services Agreement ("Agreement") is entered into as of ${d.generatedDate} ("Effective Date") between:\n\nDesigner: Summerlin Design, Ladera Ranch, California ("Designer")\n\nClient: ${company}, located at ${d.address} ("Client")`,
+      ph: false,
+    },
+    {
+      title: '1. SCOPE OF SERVICES',
+      body:  `Designer agrees to provide interior design services for the following ${d.projectType} project:\n\n${d.scope}`,
+      ph: false,
+    },
+    {
+      title: "2. DESIGNER'S COMPENSATION",
+      body:  fee,
+      ph: false,
+    },
+    {
+      title: '3. PROCUREMENT OF FURNITURE, FIXTURES & EQUIPMENT (FF&E)',
+      body:  `Designer may procure FF&E on Client's behalf. All procured items are subject to a ${d.markup}% markup above Designer's cost. This markup represents Designer's compensation for procurement management services, including vendor sourcing, order placement, delivery coordination, and quality review.`,
+      ph: false,
+    },
+    {
+      title: '4. PAYMENT SCHEDULE',
+      body:  d.payment,
+      ph: false,
+    },
+    {
+      title: '5. PROJECT TIMELINE',
+      body:  `The estimated timeline for this project is: ${d.timeline}. This estimate may be subject to change due to client approvals, vendor lead times, or factors outside Designer's reasonable control. Designer will communicate timeline changes promptly.`,
+      ph: false,
+    },
+    {
+      title: '6. CLIENT RESPONSIBILITIES',
+      body:  "[ PLACEHOLDER — Insert your standard client responsibilities clause. Example: Client shall provide timely access to the project site; provide written approvals within X business days of receiving design presentations; make decisions in a timely manner so as not to delay the project schedule; etc. ]",
+      ph: true,
+    },
+    {
+      title: '7. REVISIONS AND DESIGN CHANGES',
+      body:  '[ PLACEHOLDER — Insert your revision policy. Example: The fee includes up to X rounds of revisions per design phase. Additional revision rounds will be billed at the hourly rate. Any changes to approved selections or scope after the selections phase will be treated as additional services. ]',
+      ph: true,
+    },
+    {
+      title: '8. OWNERSHIP AND INTELLECTUAL PROPERTY',
+      body:  '[ PLACEHOLDER — Insert your IP clause. Example: All design concepts, drawings, renderings, and documents created by Designer remain the intellectual property of Designer until Client has paid all amounts due in full, at which point a non-exclusive license to use the designs for the specified project is granted. ]',
+      ph: true,
+    },
+    {
+      title: '9. CONFIDENTIALITY',
+      body:  '[ PLACEHOLDER — Insert your confidentiality clause. Example: Each party agrees to keep confidential any proprietary information of the other party and not to disclose such information to third parties without prior written consent. ]',
+      ph: true,
+    },
+    {
+      title: '10. LIMITATION OF LIABILITY',
+      body:  "[ PLACEHOLDER — Insert your limitation of liability clause. Example: Designer's total liability to Client under this Agreement shall not exceed the total design fees paid by Client in the three months preceding the claim. In no event shall Designer be liable for indirect, incidental, or consequential damages. ]",
+      ph: true,
+    },
+    {
+      title: '11. TERMINATION',
+      body:  "[ PLACEHOLDER — Insert your termination clause. Example: Either party may terminate this Agreement upon 30 days' written notice. Upon termination, Client shall pay for all services rendered and FF&E ordered through the termination date. Designer shall retain any non-refundable retainer. ]",
+      ph: true,
+    },
+    {
+      title: '12. DISPUTE RESOLUTION',
+      body:  '[ PLACEHOLDER — Insert your dispute resolution clause. Example: The parties agree to first attempt resolution through good-faith negotiation. If unsuccessful, disputes shall be resolved by binding arbitration in Orange County, California, under the rules of the American Arbitration Association. ]',
+      ph: true,
+    },
+    {
+      title: '13. GOVERNING LAW',
+      body:  'This Agreement shall be governed by and construed in accordance with the laws of the State of California, without regard to its conflict of law principles. Any legal proceedings arising from this Agreement shall be brought in the courts of Orange County, California.',
+      ph: false,
+    },
+    {
+      title: '14. ENTIRE AGREEMENT',
+      body:  'This Agreement constitutes the entire agreement between the parties regarding its subject matter and supersedes all prior negotiations, representations, warranties, or agreements, whether written or oral. This Agreement may only be modified by a written instrument signed by both parties.',
+      ph: false,
+    },
+  ];
+}
+
+// ─────────────────────────────────────────────────────────────
+// DRAFT PDF (designer review copy — watermarked, no signature)
+// ─────────────────────────────────────────────────────────────
+function previewDraftPDF() {
+  const doc      = generateDraftPDF();
+  const safeName = formData.clientName.replace(/[^a-z0-9]/gi,'_').toLowerCase();
+  const dateStr  = new Date().toISOString().slice(0,10);
+  doc.save(`summerlin-design-DRAFT_${safeName}_${dateStr}.pdf`);
+}
+
+function generateDraftPDF() {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ unit: 'mm', format: 'a4' });
+
+  const mL = 20, mR = 20, mTop = 22;
+  const pW = 210, pH = 297, cW = pW - mL - mR;
+  let y = mTop;
+
+  function checkPage(n = 8) {
+    if (y + n > pH - 18) { doc.addPage(); y = mTop; footer(); }
+  }
+
+  function footer() {
+    const pg = doc.internal.getCurrentPageInfo().pageNumber;
+    doc.setFontSize(8); doc.setFont('helvetica','normal'); doc.setTextColor(170);
+    doc.text(`DRAFT — NOT YET SIGNED — Summerlin Design — Page ${pg}`,
+      pW / 2, pH - 10, { align: 'center' });
+    doc.setTextColor(0);
+  }
+
+  function rule(yPos, weight = 'light') {
+    // GState opacity is unreliable across jsPDF CDN builds — use explicit gray instead
+    doc.setDrawColor(weight === 'heavy' ? 180 : 210);
+    doc.setLineWidth(0.25);
+    doc.line(mL, yPos, pW - mR, yPos);
+    doc.setDrawColor(0);
+  }
+
+  function wrapped(text, x, yPos, maxW, lH, fs, style = 'normal', color = 0) {
+    doc.setFontSize(fs); doc.setFont('helvetica', style); doc.setTextColor(color);
+    const lines = doc.splitTextToSize(text, maxW);
+    for (const line of lines) {
+      checkPage(lH + 2);
+      doc.text(line, x, yPos);
+      yPos += lH;
+    }
+    doc.setTextColor(0);
+    return yPos;
+  }
+
+  // Page 1 header
+  doc.setFontSize(9); doc.setFont('helvetica','normal'); doc.setTextColor(120);
+  doc.text('SUMMERLIN DESIGN', mL, y);
+  doc.text('Interior Design Services Agreement', pW - mR, y, { align:'right' });
+  y += 4; rule(y, 'heavy'); y += 8;
+  footer();
+
+  doc.setFontSize(18); doc.setFont('helvetica','bold'); doc.setTextColor(0);
+  doc.text('Interior Design Services Agreement', pW / 2, y, { align:'center' });
+  y += 7;
+  doc.setFontSize(10); doc.setFont('helvetica','normal'); doc.setTextColor(100);
+  doc.text(`Effective Date: ${formData.generatedDate}`, pW / 2, y, { align:'center' });
+  y += 12; doc.setTextColor(0);
+
+  // Client/designer info box
+  const boxY = y;
+  doc.setFillColor(248,248,246);
+  doc.rect(mL, boxY, cW, 26, 'F');
+  doc.setDrawColor(220); doc.setLineWidth(0.3);
+  doc.rect(mL, boxY, cW, 26);
+  y += 4;
+  doc.setFontSize(7.5); doc.setFont('helvetica','bold'); doc.setTextColor(80);
+  doc.text('DESIGNER', mL + 4, y);
+  doc.text('CLIENT', mL + cW / 2 + 4, y);
+  y += 4;
+  doc.setFont('helvetica','normal'); doc.setFontSize(9); doc.setTextColor(0);
+  const company = formData.company
+    ? `${formData.clientName}, ${formData.company}`
+    : formData.clientName;
+  const cLines = doc.splitTextToSize(`${company}\n${formData.address}`, cW / 2 - 8);
+  ['Summerlin Design','Ladera Ranch, California'].forEach(l => { doc.text(l, mL + 4, y); y += 4.5; });
+  let cy = boxY + 8;
+  cLines.slice(0,4).forEach(l => { doc.text(l, mL + cW / 2 + 4, cy); cy += 4.5; });
+  y = boxY + 30;
+
+  // Contract sections
+  for (const s of buildContractSections(formData)) {
+    checkPage(14);
+    y += 4; rule(y); y += 5;
+    doc.setFontSize(8.5); doc.setFont('helvetica','bold'); doc.setTextColor(0);
+    doc.text(s.title, mL, y); y += 5;
+    y = s.ph
+      ? wrapped(s.body, mL, y, cW, 5,   9,   'italic', 140)
+      : wrapped(s.body, mL, y, cW, 5.2, 9.5, 'normal', 0);
+    y += 2;
+  }
+
+  // Draft status page
+  doc.addPage(); footer(); y = mTop;
+  doc.setFontSize(9); doc.setFont('helvetica','normal'); doc.setTextColor(120);
+  doc.text('SUMMERLIN DESIGN', mL, y);
+  doc.text('Signature Status', pW - mR, y, { align:'right' });
+  y += 4; rule(y, 'heavy'); y += 12; doc.setTextColor(0);
+
+  doc.setFontSize(14); doc.setFont('helvetica','bold');
+  doc.text('Awaiting Client Signature', mL, y); y += 8;
+
+  doc.setFillColor(248,248,246);
+  doc.rect(mL, y, cW, 40, 'F');
+  doc.setDrawColor(200); doc.rect(mL, y, cW, 40);
+  y += 6;
+
+  doc.setFontSize(9); doc.setFont('helvetica','normal'); doc.setTextColor(60);
+  [
+    `Prepared for: ${company}`,
+    `Project type: ${formData.projectType}`,
+    `Designer: Summerlin Design, Ladera Ranch, California`,
+    `Date prepared: ${formData.generatedDate}`,
+    '',
+    'The client will receive this agreement via a unique signing link.',
+    'Upon signing, a fully executed copy with electronic signature',
+    'and audit trail will be generated and provided to both parties.',
+  ].forEach(l => { doc.text(l, mL + 5, y); y += 4.5; });
+  doc.setTextColor(0);
+
+  addDraftWatermark(doc);
+  return doc;
+}
+
+function addDraftWatermark(doc) {
+  const total = doc.internal.getNumberOfPages();
+  for (let p = 1; p <= total; p++) {
+    doc.setPage(p);
+    doc.setFontSize(72); doc.setFont('helvetica','bold');
+    doc.setTextColor(240, 218, 218); // pale pink — visually equivalent to ~6% opacity red on white
+    doc.text('DRAFT', 105, 168, { align: 'center', angle: 45 });
+    doc.setTextColor(0); doc.setFont('helvetica','normal');
+  }
+}
+
+// ─────────────────────────────────────────────────────────────
+// INIT
+// ─────────────────────────────────────────────────────────────
+window.addEventListener('load', () => {
+  if (sessionStorage.getItem('sd_auth') === '1') {
+    document.getElementById('login').style.display = 'none';
+    document.getElementById('app').style.display   = 'block';
+    updatePaymentSummary();
+  }
+  initFeeToggle();
+  document.getElementById('pw-input').addEventListener('keydown', e => {
+    if (e.key === 'Enter') doLogin();
+  });
+});
+</script>
+</body>
+</html>

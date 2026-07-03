@@ -1,0 +1,53 @@
+backend:
+  name: github
+  repo: brycewallai/summerlin-design
+  branch: master
+  base_url: https://summerlin-design.vercel.app
+  auth_endpoint: /api/auth
+
+media_folder: images
+public_folder: /images
+
+# ── Collections ──────────────────────────────────────────────────────
+collections:
+
+  # Portfolio projects — written to data/portfolio.json, loaded live on the portfolio page
+  - name: portfolio
+    label: Portfolio
+    files:
+      - name: projects
+        label: Portfolio Projects
+        file: data/portfolio.json
+        fields:
+          - name: projects
+            label: Projects
+            label_singular: Project
+            widget: list
+            summary: "{{fields.title}} — {{fields.category}}"
+            fields:
+              - { label: "Project Name", name: title, widget: string }
+              - { label: "Category", name: category, widget: select,
+                  options: ["Residential", "Corporate Offices", "Medical & Dental", "Hospitality", "Developer & Multi-Unit"] }
+              - { label: "Location", name: location, widget: string, required: false, hint: "e.g. Ladera Ranch" }
+              - { label: "Short Description", name: description, widget: text, required: false }
+              - { label: "Photo", name: image, widget: image,
+                  media_folder: "images/portfolio", public_folder: "/images/portfolio" }
+
+  # Hero & about photos — upload here to replace the live images
+  - name: site_images
+    label: Site Photos
+    files:
+      - name: hero
+        label: Homepage Hero Photo
+        file: data/hero.json
+        fields:
+          - { label: "Hero Photo", name: src, widget: image,
+              media_folder: "images/hero", public_folder: "/images/hero",
+              hint: "Upload your new hero image. Name it hero.webp to replace the current one, or use any filename — the site will use whichever file is saved here." }
+      - name: about
+        label: About Page — Leslie's Portrait
+        file: data/about.json
+        fields:
+          - { label: "Portrait Photo", name: src, widget: image,
+              media_folder: "images/about", public_folder: "/images/about",
+              hint: "Upload Leslie's portrait. Name it leslie.webp to replace the current one." }

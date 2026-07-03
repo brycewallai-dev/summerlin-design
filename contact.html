@@ -5,94 +5,124 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Contact | Summerlin Design — Interior Design, Orange County</title>
 <meta name="description" content="Get in touch with Summerlin Design. Residential and commercial interior design across Orange County. Based in Ladera Ranch, CA. We respond within one business day.">
+
+<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-XXXXXXXXXX');</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
 <nav class="nav">
-  <div class="wrap">
-    <a href="index.html" class="nav-logo">Summerlin Design</a>
-    <ul class="nav-links">
-      <li><a href="residential.html">Residential</a></li>
-      <li><a href="commercial.html">Commercial</a></li>
-      <li><a href="portfolio.html">Portfolio</a></li>
-      <li><a href="about.html">About</a></li>
-    </ul>
-    <a href="contact.html" class="btn btn-primary nav-cta" style="color:var(--clay);background:transparent;border-color:var(--clay);">Contact</a>
-  </div>
+  <a href="index.html" class="nav-logo">Summerlin Design</a>
+  <ul class="nav-links">
+    <li><a href="residential.html">Residential</a></li>
+    <li><a href="commercial.html">Commercial</a></li>
+    <li><a href="portfolio.html">Portfolio</a></li>
+    <li><a href="about.html">About</a></li>
+  </ul>
+  <a href="contact.html" class="nav-cta active">Get in touch</a>
 </nav>
 
-<div class="swatch-strip"><span class="s1"></span><span class="s2"></span><span class="s3"></span><span class="s4"></span><span class="s5"></span></div>
+<!-- ── PAGE HEADER ────────────────────────────────────────────── -->
+<header class="page-header">
+  <div class="wrap">
+    <span class="eyebrow-white">Contact</span>
+    <h1>Every project starts with a conversation.</h1>
+    <p class="lede">The first consultation is free and genuinely useful &mdash; even if we&rsquo;re not the right fit, you&rsquo;ll leave with a clearer sense of what your space needs.</p>
+  </div>
+</header>
 
+<!-- ── CONTACT BODY ────────────────────────────────────────────── -->
 <section class="section">
   <div class="wrap">
-    <div style="max-width:680px;margin:0 auto;">
-      <span class="eyebrow">Get in touch</span>
-      <h1 style="font-size:clamp(2rem,4vw,3.4rem);margin-top:var(--space-2);">Tell us about your project.</h1>
-      <p class="lede" style="margin-top:var(--space-3);">Residential or commercial &mdash; start here. We respond within one business day.</p>
+    <div class="cta-wrap">
 
-      <form class="form-grid" style="max-width:100%;margin-top:var(--space-4);" onsubmit="return false;">
-        <div>
-          <label for="name">Name</label>
-          <input id="name" type="text" placeholder="Your name" required>
-        </div>
-        <div>
-          <label for="phone">Phone</label>
-          <input id="phone" type="tel" placeholder="(949) 000-0000">
-        </div>
-        <div class="full">
-          <label for="email">Email</label>
-          <input id="email" type="email" placeholder="you@example.com" required>
-        </div>
-        <div class="full">
-          <label for="type">Project Type</label>
-          <select id="type">
-            <option value="">Select a project type&hellip;</option>
-            <option>Residential</option>
-            <option>Corporate Office</option>
-            <option>Medical or Dental Practice</option>
-            <option>Hospitality</option>
-            <option>Development or Property Management</option>
-            <option>Other</option>
-          </select>
-        </div>
-        <div class="full">
-          <label for="details">Tell us about your project</label>
-          <textarea id="details" rows="5" placeholder="What are you working on? Where is the space located? What's your timeline? Any details that feel relevant."></textarea>
-        </div>
-        <div class="full">
-          <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;">Send message</button>
-        </div>
-      </form>
+      <!-- Left: info -->
+      <div data-reveal>
+        <span class="eyebrow">Get in touch</span>
+        <h2 style="max-width:18ch;">Ready to talk through your project?</h2>
+        <p class="body-copy" style="margin-top:1.4rem;">Fill out the form and we&rsquo;ll follow up within one business day. If you&rsquo;d rather call or email directly, use the information below.</p>
 
-      <p class="form-micro" style="text-align:left;">We respond within one business day. No pressure, no obligation &mdash; just a straightforward conversation about your project.</p>
-
-      <hr class="hairline" style="margin:var(--space-5) 0;">
-
-      <div style="display:flex;gap:var(--space-5);flex-wrap:wrap;">
-        <div>
-          <p style="font-size:0.78rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--clay);margin-bottom:0.4rem;">Studio</p>
-          <p style="max-width:none;">Ladera Ranch, California</p>
-        </div>
-        <div>
-          <p style="font-size:0.78rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--clay);margin-bottom:0.4rem;">Service Area</p>
-          <p style="max-width:none;">Orange County within a 30-mile radius</p>
-        </div>
-        <div>
-          <p style="font-size:0.78rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--clay);margin-bottom:0.4rem;">Response Time</p>
-          <p style="max-width:none;">Within one business day</p>
+        <div style="margin-top:2.5rem; display:flex; flex-direction:column; gap:1.8rem;">
+          <div>
+            <p style="font-size:0.7rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--gray-mid);margin-bottom:0.4rem;max-width:none;">Location</p>
+            <p style="color:var(--black);font-size:1rem;max-width:none;">Ladera Ranch, CA<br>Serving Orange County within 30 miles</p>
+          </div>
+          <div>
+            <p style="font-size:0.7rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--gray-mid);margin-bottom:0.4rem;max-width:none;">Email</p>
+            <p style="color:var(--black);font-size:1rem;max-width:none;"><a href="mailto:hello@summerlindesign.com" style="border-bottom:1px solid var(--gray-rule);">hello@summerlindesign.com</a></p>
+          </div>
+          <div>
+            <p style="font-size:0.7rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--gray-mid);margin-bottom:0.4rem;max-width:none;">Response Time</p>
+            <p style="color:var(--black);font-size:1rem;max-width:none;">Within one business day.<br>No pressure, no obligation.</p>
+          </div>
+          <div>
+            <p style="font-size:0.7rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--gray-mid);margin-bottom:0.4rem;max-width:none;">Hours</p>
+            <p style="color:var(--black);font-size:1rem;max-width:none;">Monday &ndash; Friday, 9am &ndash; 5pm PT</p>
+          </div>
         </div>
       </div>
+
+      <!-- Right: form -->
+      <div data-reveal data-reveal-delay="2">
+        <form class="form-light" action="https://formspree.io/f/REPLACE_WITH_FORM_ID" method="POST">
+          <div>
+            <label for="ct-name">Name</label>
+            <input id="ct-name" name="name" type="text" placeholder="Your name" required>
+          </div>
+          <div>
+            <label for="ct-email">Email</label>
+            <input id="ct-email" name="email" type="email" placeholder="you@email.com" required>
+          </div>
+          <div>
+            <label for="ct-phone">Phone (optional)</label>
+            <input id="ct-phone" name="phone" type="tel" placeholder="(949) 000-0000">
+          </div>
+          <div>
+            <label for="ct-city">City</label>
+            <input id="ct-city" name="city" type="text" placeholder="Ladera Ranch, Irvine&hellip;">
+          </div>
+          <div class="full">
+            <label for="ct-project">Project Type</label>
+            <select id="ct-project" name="project_type">
+              <option value="">Select&hellip;</option>
+              <option>Residential — Single Room</option>
+              <option>Residential — Full Home</option>
+              <option>Residential — New Build</option>
+              <option>Commercial — Office</option>
+              <option>Commercial — Medical or Dental</option>
+              <option>Commercial — Hospitality</option>
+              <option>Commercial — Developer / Multi-Unit</option>
+              <option>Not Sure Yet</option>
+            </select>
+          </div>
+          <div class="full">
+            <label for="ct-message">Tell us about your project</label>
+            <textarea id="ct-message" name="message" rows="5" placeholder="Space size, timeline, what you&rsquo;re hoping to change, or anything else that feels relevant."></textarea>
+          </div>
+          <div class="full">
+            <button type="submit" class="btn-submit btn-submit-black">Send message</button>
+            <p class="form-note-dark" style="margin-top:0.75rem;text-align:center;font-size:0.75rem;color:var(--gray-mid);">We respond within one business day. No pressure, no obligation.</p>
+          </div>
+        </form>
+      </div>
+
     </div>
   </div>
 </section>
 
-<footer class="site-footer">
+<!-- ── FOOTER ─────────────────────────────────────────────────── -->
+<footer class="footer">
   <div class="wrap">
-    <div class="footer-grid">
+    <div class="footer-inner">
       <div>
-        <a href="index.html" class="nav-logo">Summerlin Design</a>
-        <p style="margin-top:0.5rem;color:rgba(234,227,211,0.6);">Ladera Ranch, CA &middot; Serving Orange County within a 30-mile radius</p>
+        <a href="index.html" class="footer-logo">Summerlin Design</a>
+        <p>Ladera Ranch, CA &middot; Serving Orange County within 30 miles</p>
       </div>
       <ul class="footer-links">
         <li><a href="residential.html">Residential</a></li>
@@ -109,5 +139,24 @@
   </div>
 </footer>
 
+<script>
+(function () {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var hero = document.querySelector('.hero');
+  if (hero) hero.classList.add('hero-animate');
+  document.documentElement.classList.add('js-reveal');
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-revealed');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -52px 0px' });
+  document.querySelectorAll('[data-reveal]').forEach(function (el) {
+    io.observe(el);
+  });
+})();
+</script>
 </body>
 </html>
