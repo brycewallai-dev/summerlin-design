@@ -900,14 +900,14 @@ html.js-reveal [data-reveal].is-revealed {
   position: relative;
   background: #fff;
   padding: 14px;
-  max-width: min(1800px, 96vw);
-  max-height: 96vh;
+  width: 92vw;
+  height: 90vh;
   box-shadow: 0 12px 60px rgba(0, 0, 0, 0.55);
 }
 #photo-modal-img {
   display: block;
-  max-width: 100%;
-  max-height: calc(96vh - 44px);
+  width: 100%;
+  height: calc(90vh - 44px);
   object-fit: contain;
 }
 #photo-modal-close {
