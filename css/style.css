@@ -863,6 +863,27 @@ html.js-reveal [data-reveal].is-revealed {
   transform: translateY(-3px);
 }
 
+/* ── Masonry photo gallery ─────────────────────────────────────── */
+.gallery-section { padding: 0; border-top: 1px solid var(--gray-rule); }
+.masonry-grid {
+  columns: 3;
+  column-gap: 0;
+}
+.gallery-item {
+  display: block;
+  break-inside: avoid;
+  line-height: 0;
+  cursor: zoom-in;
+}
+.gallery-item img {
+  width: 100%;
+  display: block;
+  transition: opacity 0.22s ease;
+}
+.gallery-item:hover img { opacity: 0.82; }
+@media (max-width: 760px) { .masonry-grid { columns: 2; } }
+@media (max-width: 420px) { .masonry-grid { columns: 1; } }
+
 /* ── Portfolio item caption (CMS-loaded projects) ──────────────── */
 .portfolio-item { position: relative; }
 .portfolio-caption {
