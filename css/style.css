@@ -864,16 +864,17 @@ html.js-reveal [data-reveal].is-revealed {
 }
 
 /* ── Masonry photo gallery ─────────────────────────────────────── */
-.gallery-section { padding: 0; border-top: 1px solid var(--gray-rule); }
+.gallery-section { padding: var(--sec-v) 0; border-top: 1px solid var(--gray-rule); }
 .masonry-grid {
-  columns: 3;
-  column-gap: 0;
+  columns: 4;
+  column-gap: 4px;
 }
 .gallery-item {
   display: block;
   break-inside: avoid;
   line-height: 0;
   cursor: zoom-in;
+  margin-bottom: 4px;
 }
 .gallery-item img {
   width: 100%;
@@ -881,8 +882,9 @@ html.js-reveal [data-reveal].is-revealed {
   transition: opacity 0.22s ease;
 }
 .gallery-item:hover img { opacity: 0.82; }
-@media (max-width: 760px) { .masonry-grid { columns: 2; } }
-@media (max-width: 420px) { .masonry-grid { columns: 1; } }
+@media (max-width: 900px) { .masonry-grid { columns: 3; } }
+@media (max-width: 600px) { .masonry-grid { columns: 2; } }
+@media (max-width: 380px) { .masonry-grid { columns: 1; } }
 
 /* ── Portfolio item caption (CMS-loaded projects) ──────────────── */
 .portfolio-item { position: relative; }
