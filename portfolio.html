@@ -14,7 +14,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@5/dist/photoswipe.css">
 </head>
 <body>
 
@@ -138,34 +137,78 @@
   </div>
 </footer>
 
-<script type="module">
-import PhotoSwipeLightbox from 'https://cdn.jsdelivr.net/npm/photoswipe@5/dist/photoswipe-lightbox.esm.js';
-import PhotoSwipe        from 'https://cdn.jsdelivr.net/npm/photoswipe@5/dist/photoswipe.esm.js';
+<script>
+(function () {
 
-fetch('/data/gallery.json')
-  .then(function (r) { return r.ok ? r.json() : null; })
-  .then(function (data) {
-    if (!data || !data.images || !data.images.length) return;
-    var gallery = document.getElementById('masonry-gallery');
-    if (!gallery) return;
+  // ── Modal ────────────────────────────────────────────────────
+  var overlay = document.createElement('div');
+  overlay.id = 'photo-modal';
+  overlay.setAttribute('role', 'dialog');
+  overlay.setAttribute('aria-modal', 'true');
 
-    gallery.innerHTML = data.images.map(function (f) {
-      var src = '/images/Unsorted/' + f;
-      return '<a href="' + src + '" class="gallery-item">' +
-             '<img src="' + src + '" loading="lazy" decoding="async" alt="">' +
-             '</a>';
-    }).join('');
+  var frame = document.createElement('div');
+  frame.id = 'photo-modal-frame';
 
-    var lightbox = new PhotoSwipeLightbox({
-      gallery: '#masonry-gallery',
-      children: 'a.gallery-item',
-      pswpModule: PhotoSwipe,
-      bgOpacity: 0.92,
-      showHideAnimationType: 'fade',
-    });
-    lightbox.init();
-  })
-  .catch(function () {});
+  var closeBtn = document.createElement('button');
+  closeBtn.id = 'photo-modal-close';
+  closeBtn.setAttribute('aria-label', 'Close');
+  closeBtn.textContent = '✕';
+
+  var modalImg = document.createElement('img');
+  modalImg.id = 'photo-modal-img';
+  modalImg.alt = '';
+
+  frame.appendChild(closeBtn);
+  frame.appendChild(modalImg);
+  overlay.appendChild(frame);
+  document.body.appendChild(overlay);
+
+  function openModal(src) {
+    modalImg.src = src;
+    overlay.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+    closeBtn.focus();
+  }
+
+  function closeModal() {
+    overlay.style.display = 'none';
+    modalImg.src = '';
+    document.body.style.overflow = '';
+  }
+
+  closeBtn.addEventListener('click', closeModal);
+  overlay.addEventListener('click', function (e) {
+    if (e.target === overlay) closeModal();
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && overlay.style.display === 'flex') closeModal();
+  });
+
+  // ── Gallery build ─────────────────────────────────────────────
+  fetch('/data/gallery.json')
+    .then(function (r) { return r.ok ? r.json() : null; })
+    .then(function (data) {
+      if (!data || !data.images || !data.images.length) return;
+      var gallery = document.getElementById('masonry-gallery');
+      if (!gallery) return;
+
+      gallery.innerHTML = data.images.map(function (f) {
+        var src = '/images/Unsorted/' + f;
+        return '<a href="#" class="gallery-item" data-src="' + src + '">' +
+               '<img src="' + src + '" loading="lazy" decoding="async" alt="">' +
+               '</a>';
+      }).join('');
+
+      gallery.addEventListener('click', function (e) {
+        e.preventDefault();
+        var link = e.target.closest('a.gallery-item');
+        if (!link) return;
+        openModal(link.dataset.src);
+      });
+    })
+    .catch(function () {});
+
+})();
 </script>
 
 <script>

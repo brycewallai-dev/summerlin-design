@@ -886,6 +886,50 @@ html.js-reveal [data-reveal].is-revealed {
 @media (max-width: 600px) { .masonry-grid { columns: 2; } }
 @media (max-width: 380px) { .masonry-grid { columns: 1; } }
 
+/* ── Photo modal ─────────────────────────────────────────────── */
+#photo-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0, 0, 0, 0.86);
+  align-items: center;
+  justify-content: center;
+}
+#photo-modal-frame {
+  position: relative;
+  background: #fff;
+  padding: 14px;
+  max-width: min(920px, 90vw);
+  max-height: 90vh;
+  box-shadow: 0 12px 60px rgba(0, 0, 0, 0.55);
+}
+#photo-modal-img {
+  display: block;
+  max-width: 100%;
+  max-height: calc(90vh - 44px);
+  object-fit: contain;
+}
+#photo-modal-close {
+  position: absolute;
+  top: -15px;
+  right: -15px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #fff;
+  border: none;
+  cursor: pointer;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+  transition: background 0.15s ease;
+  line-height: 1;
+}
+#photo-modal-close:hover { background: #f0f0f0; }
+
 /* ── Portfolio item caption (CMS-loaded projects) ──────────────── */
 .portfolio-item { position: relative; }
 .portfolio-caption {
