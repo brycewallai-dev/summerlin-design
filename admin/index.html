@@ -22,13 +22,43 @@
       media_folder: 'images',
       public_folder: '/images',
       collections: [
+        // ── Portfolio Gallery — add new photos ──────────────────
+        {
+          name: 'gallery',
+          label: 'Portfolio Gallery',
+          files: [
+            {
+              name: 'additions',
+              label: 'Add Gallery Photos',
+              file: 'data/gallery-additions.json',
+              fields: [
+                {
+                  name: 'images',
+                  label: 'Photos',
+                  label_singular: 'Photo',
+                  widget: 'list',
+                  summary: '{{fields.src}}',
+                  fields: [
+                    {
+                      label: 'Photo', name: 'src', widget: 'image',
+                      media_folder: '/images/gallery-additions',
+                      public_folder: '/images/gallery-additions',
+                      hint: 'Upload a photo — it will appear at the top of the portfolio grid.',
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+        // ── Portfolio Projects (CMS-managed per category) ───────
         {
           name: 'portfolio',
-          label: 'Portfolio',
+          label: 'Portfolio Projects',
           files: [
             {
               name: 'projects',
-              label: 'Portfolio Projects',
+              label: 'Projects by Category',
               file: 'data/portfolio.json',
               fields: [
                 {
@@ -56,20 +86,20 @@
             },
           ],
         },
+        // ── Site Photos ─────────────────────────────────────────
         {
           name: 'site_images',
           label: 'Site Photos',
           files: [
             {
               name: 'hero',
-              label: 'Homepage Hero Photo',
+              label: 'Homepage — Hero Photo',
               file: 'data/hero.json',
               fields: [
                 {
                   label: 'Hero Photo', name: 'src', widget: 'image',
                   media_folder: '/images/hero',
                   public_folder: '/images/hero',
-                  hint: 'Upload your new hero image. Name it hero.webp to replace the current one.',
                 },
               ],
             },
@@ -82,8 +112,33 @@
                   label: 'Portrait Photo', name: 'src', widget: 'image',
                   media_folder: '/images/about',
                   public_folder: '/images/about',
-                  hint: "Upload Leslie's portrait. Name it leslie.webp to replace the current one.",
                 },
+              ],
+            },
+            {
+              name: 'residential',
+              label: 'Residential Page Photos',
+              file: 'data/residential.json',
+              fields: [
+                { label: 'Hero Photo (full-bleed)', name: 'hero', widget: 'image', required: false, media_folder: '/images/residential', public_folder: '/images/residential', hint: 'Full-viewport hero — wide landscape, 1920×1080 min.' },
+                { label: 'Approach Section Photo', name: 'approach', widget: 'image', required: false, media_folder: '/images/residential', public_folder: '/images/residential', hint: '4:3 ratio alongside the "how we work" copy.' },
+                { label: '"Room by Room" Card Photo', name: 'single_room', widget: 'image', required: false, media_folder: '/images/residential', public_folder: '/images/residential' },
+                { label: '"Kitchen & Bath" Card Photo', name: 'kitchen_bath', widget: 'image', required: false, media_folder: '/images/residential', public_folder: '/images/residential' },
+                { label: '"Full-Home Design" Card Photo', name: 'full_home', widget: 'image', required: false, media_folder: '/images/residential', public_folder: '/images/residential' },
+                { label: '"New Construction" Card Photo', name: 'new_build', widget: 'image', required: false, media_folder: '/images/residential', public_folder: '/images/residential' },
+              ],
+            },
+            {
+              name: 'commercial',
+              label: 'Commercial Page Photos',
+              file: 'data/commercial.json',
+              fields: [
+                { label: 'Hero Photo (full-bleed)', name: 'hero', widget: 'image', required: false, media_folder: '/images/commercial', public_folder: '/images/commercial', hint: 'Full-viewport hero — wide landscape, 1920×1080 min.' },
+                { label: 'Problem Section Photo', name: 'office_detail', widget: 'image', required: false, media_folder: '/images/commercial', public_folder: '/images/commercial', hint: '4:3 ratio alongside the opening copy.' },
+                { label: '"Corporate Office" Card Photo', name: 'offices', widget: 'image', required: false, media_folder: '/images/commercial', public_folder: '/images/commercial' },
+                { label: '"Medical & Dental" Card Photo', name: 'medical', widget: 'image', required: false, media_folder: '/images/commercial', public_folder: '/images/commercial' },
+                { label: '"Hospitality" Card Photo', name: 'hospitality', widget: 'image', required: false, media_folder: '/images/commercial', public_folder: '/images/commercial' },
+                { label: '"Developers" Card Photo', name: 'developers', widget: 'image', required: false, media_folder: '/images/commercial', public_folder: '/images/commercial' },
               ],
             },
           ],

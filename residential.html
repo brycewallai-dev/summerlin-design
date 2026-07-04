@@ -30,7 +30,7 @@
 
 <!-- ── HERO ──────────────────────────────────────────────────── -->
 <section class="hero">
-  <div class="hero-bg">
+  <div class="hero-bg" data-img-slot="hero">
     <!-- ✏️ Replace with: <img src="images/residential/residential-hero.jpg" alt="Residential interior design Orange County"> -->
     <div class="hero-ph-label">
       Hero photo — full bleed, full viewport height<br>
@@ -66,7 +66,7 @@
         <p class="body-copy" style="margin-top:1rem;">Furniture is sourced, ordered, coordinated, and delivered in-house. You don&rsquo;t chase vendors. You don&rsquo;t manage timelines. You show up for the walkthrough.</p>
         <p style="margin-top:1rem; color:var(--black); font-weight:500; max-width:50ch; line-height:1.75;">10 years and 250+ projects means the judgment is there &mdash; to push back when something won&rsquo;t work, and to move fast when the right answer is obvious.</p>
       </div>
-      <div class="img-ph" style="aspect-ratio:4/3;" data-reveal data-reveal-delay="2">
+      <div class="img-ph" style="aspect-ratio:4/3;" data-reveal data-reveal-delay="2" data-img-slot="approach">
         <!-- ✏️ Replace with: <img src="images/residential/approach.jpg" alt="Residential interior detail"> -->
         Residential interior detail · 4:3 · 800×600px min
       </div>
@@ -84,7 +84,7 @@
     <div class="card-grid">
 
       <div class="card" data-reveal data-reveal-delay="1">
-        <div class="card-img">
+        <div class="card-img" data-img-slot="single_room">
           <!-- ✏️ Replace with: <img src="images/residential/single-room.jpg" alt="Living room design"> -->
           Single room design · 4:3 · 800×600px min
         </div>
@@ -96,7 +96,7 @@
       </div>
 
       <div class="card" data-reveal data-reveal-delay="2">
-        <div class="card-img" style="background:var(--ph-light);">
+        <div class="card-img" style="background:var(--ph-light);" data-img-slot="kitchen_bath">
           <!-- ✏️ Replace with: <img src="images/residential/kitchen-bath.jpg" alt="Kitchen and bath design"> -->
           Kitchen &amp; bath renovation · 4:3 · 800×600px min
         </div>
@@ -108,7 +108,7 @@
       </div>
 
       <div class="card" data-reveal data-reveal-delay="1">
-        <div class="card-img" style="background:var(--ph-meddark);">
+        <div class="card-img" style="background:var(--ph-meddark);" data-img-slot="full_home">
           <!-- ✏️ Replace with: <img src="images/residential/full-home.jpg" alt="Full home interior design"> -->
           Full home design · 4:3 · 800×600px min
         </div>
@@ -120,7 +120,7 @@
       </div>
 
       <div class="card" data-reveal data-reveal-delay="2">
-        <div class="card-img">
+        <div class="card-img" data-img-slot="new_build">
           <!-- ✏️ Replace with: <img src="images/residential/new-build.jpg" alt="New build interior design"> -->
           New build interior design · 4:3 · 800×600px min
         </div>
@@ -297,6 +297,27 @@
   document.querySelectorAll('[data-reveal]').forEach(function (el) {
     io.observe(el);
   });
+})();
+</script>
+
+<script>
+(function () {
+  fetch('/data/residential.json')
+    .then(function (r) { return r.ok ? r.json() : null; })
+    .then(function (d) {
+      if (!d) return;
+      Object.keys(d).forEach(function (slot) {
+        if (!d[slot]) return;
+        var el = document.querySelector('[data-img-slot="' + slot + '"]');
+        if (!el) return;
+        el.innerHTML = '';
+        var img = document.createElement('img');
+        img.src = d[slot];
+        img.alt = '';
+        el.appendChild(img);
+      });
+    })
+    .catch(function () {});
 })();
 </script>
 </body>

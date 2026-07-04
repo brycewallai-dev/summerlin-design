@@ -1,3 +1,8 @@
 {
-  "hero": "/images/residential/hero-residential.webp"
+  "hero": "/images/residential/hero-residential.webp",
+  "approach": "",
+  "single_room": "",
+  "kitchen_bath": "",
+  "full_home": "",
+  "new_build": ""
 }

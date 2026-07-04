@@ -185,28 +185,35 @@
   });
 
   // ── Gallery build ─────────────────────────────────────────────
-  fetch('/data/gallery.json')
-    .then(function (r) { return r.ok ? r.json() : null; })
-    .then(function (data) {
-      if (!data || !data.images || !data.images.length) return;
-      var gallery = document.getElementById('masonry-gallery');
-      if (!gallery) return;
+  Promise.all([
+    fetch('/data/gallery.json').then(function (r) { return r.ok ? r.json() : {images:[]}; }).catch(function () { return {images:[]}; }),
+    fetch('/data/gallery-additions.json').then(function (r) { return r.ok ? r.json() : {images:[]}; }).catch(function () { return {images:[]}; }),
+  ]).then(function (results) {
+    var base = results[0];
+    var additions = results[1];
 
-      gallery.innerHTML = data.images.map(function (f) {
-        var src = '/images/Unsorted/' + f;
-        return '<a href="#" class="gallery-item" data-src="' + src + '">' +
-               '<img src="' + src + '" loading="lazy" decoding="async" alt="">' +
-               '</a>';
-      }).join('');
+    // CMS-added photos appear first (newest at top)
+    var addSrcs = (additions.images || []).map(function (item) { return item.src; });
+    var baseSrcs = (base.images || []).map(function (f) { return '/images/Unsorted/' + f; });
+    var allSrcs = addSrcs.concat(baseSrcs);
 
-      gallery.addEventListener('click', function (e) {
-        e.preventDefault();
-        var link = e.target.closest('a.gallery-item');
-        if (!link) return;
-        openModal(link.dataset.src);
-      });
-    })
-    .catch(function () {});
+    if (!allSrcs.length) return;
+    var gallery = document.getElementById('masonry-gallery');
+    if (!gallery) return;
+
+    gallery.innerHTML = allSrcs.map(function (src) {
+      return '<a href="#" class="gallery-item" data-src="' + src + '">' +
+             '<img src="' + src + '" loading="lazy" decoding="async" alt="">' +
+             '</a>';
+    }).join('');
+
+    gallery.addEventListener('click', function (e) {
+      e.preventDefault();
+      var link = e.target.closest('a.gallery-item');
+      if (!link) return;
+      openModal(link.dataset.src);
+    });
+  });
 
 })();
 </script>

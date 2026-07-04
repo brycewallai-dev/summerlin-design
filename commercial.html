@@ -30,7 +30,7 @@
 
 <!-- ── HERO ──────────────────────────────────────────────────── -->
 <section class="hero">
-  <div class="hero-bg">
+  <div class="hero-bg" data-img-slot="hero">
     <!-- ✏️ Replace with: <img src="images/commercial/commercial-hero.jpg" alt="Commercial interior design Orange County"> -->
     <div class="hero-ph-label">
       Hero photo — full bleed, full viewport height<br>
@@ -66,7 +66,7 @@
         <p class="body-copy" style="margin-top:1rem;">But your space is doing more work than you think. It&rsquo;s the first thing a new client sees, the first impression a candidate forms before you say a word, and the daily environment your team spends 40+ hours a week inside.</p>
         <p style="margin-top:1rem; color:var(--black); font-weight:500; max-width:52ch; line-height:1.75;">We handle the entire process &mdash; design, sourcing, and installation &mdash; so your space matches the caliber of the business you&rsquo;re running.</p>
       </div>
-      <div class="img-ph" style="aspect-ratio:4/3;" data-reveal data-reveal-delay="2">
+      <div class="img-ph" style="aspect-ratio:4/3;" data-reveal data-reveal-delay="2" data-img-slot="office_detail">
         <!-- ✏️ Replace with: <img src="images/commercial/office-detail.jpg" alt="Office interior"> -->
         Office interior detail · 4:3 · 800×600px min
       </div>
@@ -84,7 +84,7 @@
     <div class="card-grid">
 
       <div class="card" data-reveal data-reveal-delay="1">
-        <div class="card-img">
+        <div class="card-img" data-img-slot="offices">
           <!-- ✏️ Replace with: <img src="images/commercial/offices.jpg" alt="Corporate office interior"> -->
           Corporate office interior · 4:3 · 800×600px min
         </div>
@@ -96,7 +96,7 @@
       </div>
 
       <div class="card" data-reveal data-reveal-delay="2">
-        <div class="card-img" style="background:var(--ph-light);">
+        <div class="card-img" style="background:var(--ph-light);" data-img-slot="medical">
           <!-- ✏️ Replace with: <img src="images/commercial/medical.jpg" alt="Medical practice interior"> -->
           Medical or dental practice interior · 4:3 · 800×600px min
         </div>
@@ -108,7 +108,7 @@
       </div>
 
       <div class="card" data-reveal data-reveal-delay="1">
-        <div class="card-img img-ph-dark" style="aspect-ratio:4/3;">
+        <div class="card-img img-ph-dark" style="aspect-ratio:4/3;" data-img-slot="hospitality">
           <!-- ✏️ Replace with: <img src="images/commercial/hospitality.jpg" alt="Hospitality interior"> -->
           Hotel or restaurant interior · 4:3 · 800×600px min
         </div>
@@ -120,7 +120,7 @@
       </div>
 
       <div class="card" data-reveal data-reveal-delay="2">
-        <div class="card-img">
+        <div class="card-img" data-img-slot="developers">
           <!-- ✏️ Replace with: <img src="images/commercial/developers.jpg" alt="Model unit interior"> -->
           Model unit or common area · 4:3 · 800×600px min
         </div>
@@ -301,6 +301,27 @@
   document.querySelectorAll('[data-reveal]').forEach(function (el) {
     io.observe(el);
   });
+})();
+</script>
+
+<script>
+(function () {
+  fetch('/data/commercial.json')
+    .then(function (r) { return r.ok ? r.json() : null; })
+    .then(function (d) {
+      if (!d) return;
+      Object.keys(d).forEach(function (slot) {
+        if (!d[slot]) return;
+        var el = document.querySelector('[data-img-slot="' + slot + '"]');
+        if (!el) return;
+        el.innerHTML = '';
+        var img = document.createElement('img');
+        img.src = d[slot];
+        img.alt = '';
+        el.appendChild(img);
+      });
+    })
+    .catch(function () {});
 })();
 </script>
 </body>
