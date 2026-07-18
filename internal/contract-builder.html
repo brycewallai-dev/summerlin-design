@@ -7,15 +7,10 @@
 <title>Contract Builder — Summerlin Design</title>
 <!--
   SUMMERLIN DESIGN — INTERNAL CONTRACT BUILDER  (Stage 1 of 2)
-  Not linked from the public site. Password protected.
+  Not linked from the public site.
 
   STAGE 1 — Designer fills in all business terms → generates a unique
-  client signing link.  STAGE 2 — /sign.html (client-facing, no password).
-
-  DEFAULT PASSWORD: SummerlinInternal26
-  To change: open browser console and run:
-    hashPassword('your-new-password').then(h => console.log(h))
-  Then replace PASSWORD_HASH below with the output.
+  client signing link.  STAGE 2 — /sign.html (client-facing).
 
   Formspree: replace REPLACE_WITH_INTERNAL_FORM_ID with a new form ID
   created at formspree.io (keep separate from the public contact form).
@@ -77,28 +72,8 @@ button {
   white-space: pre-wrap; min-height: 80px;
 }
 
-/* ── Login ─────────────────────────────────────────────── */
-#login {
-  min-height: 100vh; display: flex; align-items: center; justify-content: center;
-  background: #0a0a0a;
-}
-.login-card {
-  background: #fff; padding: 3rem 2.5rem; width: 100%; max-width: 400px;
-  border-radius: 2px;
-}
-.login-logo { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.18em;
-  text-transform: uppercase; color: #6b6b6b; margin-bottom: 1.5rem; }
-.login-card h2 { font-size: 1.5rem; font-weight: 500; margin-bottom: 0.3rem; }
-.login-card .sub { font-size: 0.85rem; color: #6b6b6b; margin-bottom: 1.8rem; }
-.login-error { display: none; font-size: 0.82rem; color: #c0392b;
-  background: #fdf0ee; border: 1px solid #e0b0aa; padding: 0.6rem 0.8rem;
-  border-radius: 2px; margin-bottom: 1rem; }
-.login-error.visible { display: block; }
-.login-card .field { margin-bottom: 1rem; }
-.login-card button { margin-top: 0.5rem; }
-
 /* ── App ───────────────────────────────────────────────── */
-#app { display: none; max-width: 860px; margin: 0 auto; padding: 2rem 1.5rem 5rem; }
+#app { max-width: 860px; margin: 0 auto; padding: 2rem 1.5rem 5rem; }
 .tool-header {
   display: flex; align-items: baseline; gap: 1rem;
   padding-bottom: 1.2rem; border-bottom: 1px solid #d8d8d8;
@@ -183,23 +158,6 @@ button {
 </style>
 </head>
 <body>
-
-<!-- ══════════════════════════════════════════════════════
-     LOGIN
-     ══════════════════════════════════════════════════════ -->
-<div id="login">
-  <div class="login-card">
-    <div class="login-logo">Summerlin Design</div>
-    <h2>Contract Builder</h2>
-    <p class="sub">Internal use only &mdash; not a client-facing page.</p>
-    <div class="login-error" id="login-error">Incorrect password. Try again.</div>
-    <div class="field">
-      <label for="pw-input">Password</label>
-      <input type="password" id="pw-input" autocomplete="current-password">
-    </div>
-    <button class="btn-primary" onclick="doLogin()">Enter</button>
-  </div>
-</div>
 
 <!-- ══════════════════════════════════════════════════════
      APP
@@ -448,35 +406,8 @@ button {
 
 // ─────────────────────────────────────────────────────────────
 // CONFIG
-// Default password: SummerlinInternal26
-// To change: run hashPassword('newpassword').then(h=>console.log(h))
-// in the browser console, then paste the result here.
 // ─────────────────────────────────────────────────────────────
-const PASSWORD_HASH    = 'e667785a639056b6cf21c41db3b2ed57a68ca16fb1f1764d90e4d794329e7c14';
 const SIGNING_BASE_URL = 'https://summerlin-design.vercel.app/sign.html';
-
-// ─────────────────────────────────────────────────────────────
-// AUTH
-// ─────────────────────────────────────────────────────────────
-async function hashPassword(pw) {
-  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(pw));
-  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
-}
-
-async function doLogin() {
-  const pw   = document.getElementById('pw-input').value;
-  const hash = await hashPassword(pw);
-  if (hash === PASSWORD_HASH) {
-    sessionStorage.setItem('sd_auth', '1');
-    document.getElementById('login').style.display = 'none';
-    document.getElementById('app').style.display   = 'block';
-    updatePaymentSummary();
-  } else {
-    document.getElementById('login-error').classList.add('visible');
-    document.getElementById('pw-input').value = '';
-    document.getElementById('pw-input').focus();
-  }
-}
 
 // ─────────────────────────────────────────────────────────────
 // STATE
@@ -957,15 +888,8 @@ function addDraftWatermark(doc) {
 // INIT
 // ─────────────────────────────────────────────────────────────
 window.addEventListener('load', () => {
-  if (sessionStorage.getItem('sd_auth') === '1') {
-    document.getElementById('login').style.display = 'none';
-    document.getElementById('app').style.display   = 'block';
-    updatePaymentSummary();
-  }
+  updatePaymentSummary();
   initFeeToggle();
-  document.getElementById('pw-input').addEventListener('keydown', e => {
-    if (e.key === 'Enter') doLogin();
-  });
 });
 </script>
 </body>
